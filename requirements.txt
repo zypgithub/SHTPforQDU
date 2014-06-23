@@ -1,0 +1,4 @@
+Django>=1.5
+South>=0.8
+django-debug-toolbar
+requests
