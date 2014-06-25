@@ -1,0 +1,23 @@
+#coding:utf-8
+from django.contrib.auth.models import User
+from django.db import models
+
+class UserProfile(models.Model):
+    user = models.OneToOneField(User)
+    school_id = models.CharField(max_length=12, null=False, blank=False)
+    nickname = models.CharField(max_length=30, null=False, blank=False)
+    college = models.CharField(max_length=30, null=False, blank=False)
+    grade = models.CharField(max_length=10, null=False, blank=False)
+    major = models.CharField(max_length=20, null=False, blank=False)
+    gender = models.CharField(max_length=1, choices=(('M', '男'), ('F', '女')))
+    
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        verbose_name = "Student"
+        verbose_name_plural = "Students"
+
+    def __unicode__(self):
+        return u"School Id: %s Username: %s Nickname: %s College: %s Grade: %s Major: %s Gender: %s" % (
+                self.school_id, self.username, self.nickname, self.college, 
+                self.grader, self.major, self.gender)
