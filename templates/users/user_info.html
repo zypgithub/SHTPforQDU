@@ -1,0 +1,17 @@
+{% block body %}
+<div>
+    <form id="user_info" action={% url 'save_user' %} method="post">
+        {% csrf_token %}
+        <input name="school_id" id="school_id" value="{{ user_info.0 }}" readonly="readonly"><br />
+        <input name="name" id="name" value="{{ user_info.1 }}" readonly="readonly"><br />
+        <input name="college" id="college" value="{{ user_info.2 }}" readonly="readonly"><br />
+        <input name="major" id="major" value="{{ user_info.3 }}" readonly="readonly"><br />
+        <input name="grade" id="grade" value="{{ user_info.5 }}" readonly="readonly"><br />
+        <input type="input" name="nickname" id="nickname" placeholder="请输入昵称"><br/>
+        <input type="password" name="password" id="password" placeholder="请输入登录密码"><br/>
+        <input type="radio" name="gender" id="gender" value="男">男
+        <input type="radio" name="gender" id="gender" value="女">女<br/>
+        <input type="submit" name="submit" value="submit">
+    </form>
+</div>
+{% endblock %}

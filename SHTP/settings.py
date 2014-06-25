@@ -127,6 +127,8 @@ INSTALLED_APPS = (
     # Uncomment the next line to enable admin documentation:
      'django.contrib.admindocs',
      'south',
+     'requests',
+     'users',
 )
 
 # A sample logging configuration. The only tangible logging
@@ -158,6 +160,7 @@ LOGGING = {
     }
 }
 
+"""
 if DEBUG:
     INTERNAL_IPS = ('127.0.0.1',)
     MIDDLEWARE_CLASSES += (
@@ -185,3 +188,4 @@ if DEBUG:
     DEBUG_TOOLBAR_CONFIG = {
         'INTERCEPT_REDIRECTS': False,
     }
+    """
