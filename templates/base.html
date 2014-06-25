@@ -1,0 +1,32 @@
+<!doctype html>
+
+<html>
+	<head>
+		<meta charset='utf-8'>
+        <title>
+            {% block title %}二手交易平台{% endblock %}
+        </title>
+		<link rel='stylesheet' href='{{ STATIC_URL }}css/bootstrap.css'/>
+		<link rel='stylesheet' href='{{ STATIC_URL }}css/messenger.css'/>
+		<link rel='stylesheet' href='{{ STATIC_URL }}css/messenger-theme-flat.css'/>
+        {% block cssblock %}
+        {% endblock %}
+        <script src='{{ STATIC_URL }}js/jquery.js'></script>
+        <script src='{{ STATIC_URL }}js/messenger.min.js'></script>
+		<script type='text/javascript' src='{{ STATIC_URL }}js/bootstrap.js'></script>
+        <!--
+		<script type='text/javascript'>
+        Messenger.options = {
+            extraClasses: 'messenger-fixed messenger-on-bottom messenger-on-right',
+            theme: 'flat'
+        }
+        </script>
+        -->
+        {% block javascriptblock %}
+        {% endblock %}
+    </head>
+	<body class='{% block body_class %} {% endblock %}'>
+		{% block body %}
+		{% endblock %}
+	</body>
+</html>
