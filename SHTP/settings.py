@@ -129,6 +129,7 @@ INSTALLED_APPS = (
      'south',
      'requests',
      'users',
+     'category'
 )
 
 # A sample logging configuration. The only tangible logging
