@@ -4,7 +4,7 @@ from django.db import models
 class category(models.Model):
     name = models.CharField(max_length=100, null=False, blank=False )
     created_at = models.DateTimeField(auto_now_add=True)
-    latest_at = models.DateTimeField(auto_now_add=True)
+    alter_at = models.DateTimeField(auto_now=True)
     production_count = models.IntegerField(null=False, blank=False)
 
     class Meta:
