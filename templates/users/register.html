@@ -11,8 +11,11 @@
         <label for="jw_password">教务密码</label>
         <input type="password" id="jw_password" name="jw_password" placeholder="请输入教务密码">
         <br />
+        <label for="password">登录密码</label>
+        <input type="password" name="password" id="password" placeholder="请输入登录密码"><br/>
+        <label for="captcha">验证码</label>
         <input type="captcha" id="captcha" name="captcha" placeholder="请输入验证码">
-        <img src="data:image/jpeg;base64,{{ captcha }}" />
+            <img src="data:image/jpeg;base64,{{ captcha }}" />
         <br />
         <input type="submit" id="submit" value="register">
     </form>
