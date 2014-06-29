@@ -2,10 +2,11 @@
 from base64 import b64encode
 import json
 
+from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.models import User
 from django.db import IntegrityError
 from django.http import HttpResponse
-from django.shortcuts import render
+from django.shortcuts import redirect, render
 
 from users.forms import UserProfileForm
 from users.models import UserProfile
@@ -64,3 +65,27 @@ def save_user(request):
         #TODO:注册成功的响应
         return HttpResponse("register completed!", content_type="text/html")
 
+def user_login(request):
+    if request.method == 'POST':
+        username = request.POST.get('school_id')
+        password = request.POST.get('password')
+        user = authenticate(username=username, password=password)
+        if isinstance(user, User):
+            login(request, user)
+            return redirect('user_dashboard')
+    return redirect('user_index')
+    #TODO:登录失败（账户密码错误）的提示功能
+
+def dashboard(request):
+    return render(request, 'users/dashboard.html')
+
+
+#@login_required(login_url='student_index')
+#@is_student()
+def user_logout(request):
+    logout(request)
+    return redirect('user_index')
+
+
+def index(request):
+        return render(request, 'users/index.html')
