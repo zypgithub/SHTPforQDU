@@ -16,4 +16,11 @@ urlpatterns = patterns('',
     # url(r'^admin/', include(admin.site.urls)),
     url(r'users/register/$', 'users.views.register', name='user_register'),
     url(r'users/save/$', 'users.views.save_user', name='save_user'),
+    url(r'^users/login/$', 'users.views.user_login', name='user_login'),
+    url(r'^user/dashboard/$', 'users.views.dashboard',name='user_dashboard'),
+    url(r'^user/$', 'users.views.index', name='user_index'),
+                       
+
+                       
+
 )
