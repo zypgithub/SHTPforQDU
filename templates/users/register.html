@@ -1,21 +1,38 @@
 {% extends "base.html" %}
 
+{% block javascriptblock %}
+<script type="text/javascript" src="{{ STATIC_URL }}js/register.js"></script>
+{% endblock %}
+
+{% block cssblock %}
+<link rel="stylesheet" href="{{STATIC_URL}}css/register.css"/>
+{% endblock %}
+
 {% block body %}
 
-<div id="register_form">
-    <form action="{% url 'user_register' %}" method="post">
-        {% csrf_token %}
-        <label for="school_id">用户名</label>
-        <input type="text" id="school_id" name="school_id" placeholder="请输入学号">
-        <br />
-        <label for="jw_password">教务密码</label>
-        <input type="password" id="jw_password" name="jw_password" placeholder="请输入教务密码">
-        <br />
-        <input type="captcha" id="captcha" name="captcha" placeholder="请输入验证码">
-        <img src="data:image/jpeg;base64,{{ captcha }}" />
-        <br />
-        <input type="submit" id="submit" value="register">
-    </form>
+<div id="register_box">
+    <h3 id="register">
+        注册     or
+        <span id="login"><a href="">登录</a></span>
+    </h3>
+    <div id="register_form">
+        <form id="register" action="{% url 'user_register' %}" method="post">
+            {% csrf_token %}
+            <label for="school_id">用户名</label>
+            <input type="text" id="school_id" name="school_id" placeholder="请输入学号">
+            <br />
+            <label for="jw_password">教务密码</label>
+            <input type="password" id="jw_password" name="jw_password" placeholder="请输入教务密码">
+            <br />
+            <label for="password">登录密码</label>
+            <input type="password" name="password" id="password" placeholder="请输入登录密码"><br/>
+            <label for="captcha">验证码</label>
+            <input type="captcha" id="captcha" name="captcha" placeholder="请输入验证码">
+                <img src="data:image/jpeg;base64,{{ captcha }}" />
+            <br />
+            <input type="submit" id="submit" value="register">
+        </form>
+    </div>
 </div>
 
 {% endblock %}

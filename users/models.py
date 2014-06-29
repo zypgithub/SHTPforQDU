@@ -5,11 +5,14 @@ from django.db import models
 class UserProfile(models.Model):
     user = models.OneToOneField(User)
     school_id = models.CharField(max_length=12, null=False, blank=False)
+    username = models.CharField(max_length=30, null=False, blank=False)
     nickname = models.CharField(max_length=30, null=False, blank=False)
     college = models.CharField(max_length=30, null=False, blank=False)
     grade = models.CharField(max_length=10, null=False, blank=False)
     major = models.CharField(max_length=20, null=False, blank=False)
-    gender = models.CharField(max_length=1, choices=(('M', '男'), ('F', '女')))
+    gender = models.CharField(max_length=1, null=False, blank=False)
+    telephone = models.CharField(max_length=15, null=False, blank=False)
+    qq = models.CharField(max_length=20, null=False, blank=False)
     
     created_at = models.DateTimeField(auto_now_add=True)
 
