@@ -1,1 +1,11 @@
-登录成功
+<div>
+{% if user.is_authenticated %}
+<ul class="nav navbar-nav navbar-right">
+    <li>当前登录用户为<a href="">{{ user.get_username }}</a></li>
+    <li><a href="{% url 'user_logout' %}">登出</a></li>
+</ul>
+{% else %}
+当前没有登录用户
+{% endif %}
+</div>
+
