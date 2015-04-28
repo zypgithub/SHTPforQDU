@@ -130,7 +130,7 @@ INSTALLED_APPS = (
      'requests',
      'users',
      'category',
-     #'goods',
+     'goods',
 )
 
 # A sample logging configuration. The only tangible logging

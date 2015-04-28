@@ -3,7 +3,7 @@ from django.contrib.auth.models import User
 from django.db import models
 
 class UserProfile(models.Model):
-    user = models.OneToOneField(User)
+    user = models.OneToOneField(User, unique=True)
     school_id = models.CharField(max_length=12, null=False, blank=False)
     username = models.CharField(max_length=30, null=False, blank=False)
     nickname = models.CharField(max_length=30, null=False, blank=False)

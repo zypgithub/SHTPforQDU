@@ -11,5 +11,4 @@ class goods(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     browse_count = models.IntegerField()
     alter_at = models.DateTimeField(auto_now=True)
-    photos = models.FilePathField(path="/Images/"+author.id +"/" + id)
     
