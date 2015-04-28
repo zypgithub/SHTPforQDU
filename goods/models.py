@@ -1,6 +1,6 @@
 #coding:utf-8
 from django.db import models
-from category import category
+from category.models import category
 from django.contrib.auth.models import User
 
 class goods(models.Model):
@@ -13,4 +13,3 @@ class goods(models.Model):
     alter_at = models.DateTimeField(auto_now=True)
     photos = models.FilePathField(path="/Images/"+author.id +"/" + id)
     
-

@@ -13,7 +13,9 @@ urlpatterns = patterns('',
     # url(r'^admin/doc/', include('django.contrib.admindocs.urls')),
 
     # Uncomment the next line to enable the admin:
-    # url(r'^admin/', include(admin.site.urls)),
+    # url(r'^admin/', include(admin.site.urls)),\
+
+    #URL about User
     url(r'users/register/$', 'users.views.register', name='user_register'),
     url(r'users/save/$', 'users.views.save_user', name='save_user'),
     url(r'users/captcha/$', 'users.views.refresh_captcha', name='refresh_captcha'),
@@ -22,7 +24,8 @@ urlpatterns = patterns('',
     url(r'^users/dashboard/$', 'users.views.dashboard',name='user_dashboard'),
     url(r'^users/$', 'users.views.index', name='user_index'),
                        
-
+    #URL about goods
+    url(r'^goods/listall/(P<list_mode>/d+)/(P<key_word>/.*)/$)', 'goods.views.list_goods', name='goods_listall'),
                        
 
 )
