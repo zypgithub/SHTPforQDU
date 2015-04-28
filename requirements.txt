@@ -3,3 +3,4 @@ South>=0.8
 django-debug-toolbar
 requests
 bs4
+pillow
