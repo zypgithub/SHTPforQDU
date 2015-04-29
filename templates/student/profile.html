@@ -1,0 +1,14 @@
+{% extends "student/dashboard.html" %}
+
+
+{% block title %}个人信息{% endblock %}
+{% block javascriptblock %}
+<script src="{{ STATIC_URL }}js/student_profile.js"></script>
+{% endblock %}
+
+{% block right %}
+<h1>
+    <small>个人信息</small>
+</h1>
+{% include "student/_profile.html" %}
+{% endblock %}

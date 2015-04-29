@@ -25,7 +25,8 @@ urlpatterns = patterns('',
     url(r'^users/$', 'users.views.index', name='user_index'),
                        
     #URL about goods
-    url(r'^goods/listall/(P<list_mode>/d+)/(P<key_word>/.*)/$)', 'goods.views.list_goods', name='goods_listall'),
+    url(r'^goods/(?P<filter_category>[a-z]+)/(?P<key_word>.*)$', 'goods.views.list_goods', name='goods_listall'),
+    #url(r'^goods/(?P<list_mode>[a-z]+)/$', 'goods.views.list_goods', name='goods_list'),
                        
 
 )

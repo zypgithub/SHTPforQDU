@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+
+
+{% block cssblock %}
+<link rel='stylesheet' href='{{ STATIC_URL  }}css/two_columns.css'/>
+{% endblock %}
+
+{% block body %}
+
+{% block nav_bar %}
+{% endblock %}
+
+<div class="container bs-docs-container">
+	<div class="row">
+		<div class="col-md-3">
+            {% block left %}
+            {% endblock %}
+        </div>
+		<div class="col-md-9">
+            {% block right %}
+            {% endblock %}
+        </div>
+	</div>
+</div>
+{% endblock %}
+

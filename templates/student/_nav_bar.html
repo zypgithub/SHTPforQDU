@@ -1,0 +1,20 @@
+<div class='navbar navbar-inverse'>
+    <div class='container'>
+	    <div class='navbar-header'>
+		    <button type='button' class='navbar-toggle' data-toggle='collapse' data-target='.navbar-collapse'>
+		        <span class='icon-bar'></span>
+			    <span class='icon-bar'></span>
+				<span class='icon-bar'></span>
+		    </button>
+	    <a class='navbar-brand' href='#'>实验报告在线提交系统</a>
+        </div>
+
+        {% if user.is_authenticated %}
+        <ul class="nav navbar-nav navbar-right">
+            <li><a href="{% url 'student_profile' %}">{{ user.get_username }}</a></li>
+            <li><a href="{% url 'student_signout' %}">登出</a></li>
+        </ul>
+        {% endif %}
+
+    </div>
+</div>

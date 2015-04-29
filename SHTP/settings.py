@@ -9,6 +9,8 @@ ADMINS = (
 
 MANAGERS = ADMINS
 
+DEBUG_TOOLBAR_PATCH_SETTINGS = False
+
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3', # Add 'postgresql_psycopg2', 'mysql', 'sqlite3' or 'oracle'.
@@ -101,6 +103,7 @@ MIDDLEWARE_CLASSES = (
     'django.contrib.messages.middleware.MessageMiddleware',
     # Uncomment the next line for simple clickjacking protection:
     # 'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'debug_toolbar.middleware.DebugToolbarMiddleware',
 )
 
 ROOT_URLCONF = 'SHTP.urls'
@@ -131,6 +134,7 @@ INSTALLED_APPS = (
      'users',
      'category',
      'goods',
+     'debug_toolbar'
 )
 
 # A sample logging configuration. The only tangible logging
@@ -162,7 +166,7 @@ LOGGING = {
     }
 }
 
-"""
+""""
 if DEBUG:
     INTERNAL_IPS = ('127.0.0.1',)
     MIDDLEWARE_CLASSES += (
@@ -172,11 +176,10 @@ if DEBUG:
     INSTALLED_APPS += (
         'debug_toolbar',
     )
-
     DEBUG_TOOLBAR_PANELS = (
         'debug_toolbar.panels.version.VersionDebugPanel',
         'debug_toolbar.panels.timer.TimerDebugPanel',
-        'debug_toolbar.panels.settings_vars.SettingsVarsDebugPanel',
+        #'debug_toolbar.panels.settings_vars.SettingsVarsDebugPanel',
         'debug_toolbar.panels.headers.HeaderDebugPanel',
         #'debug_toolbar.panels.profiling.ProfilingDebugPanel',
         'debug_toolbar.panels.request_vars.RequestVarsDebugPanel',
@@ -186,7 +189,6 @@ if DEBUG:
         'debug_toolbar.panels.signals.SignalDebugPanel',
         'debug_toolbar.panels.logger.LoggingPanel',
     )
-
     DEBUG_TOOLBAR_CONFIG = {
         'INTERCEPT_REDIRECTS': False,
     }

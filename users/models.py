@@ -23,4 +23,4 @@ class UserProfile(models.Model):
     def __unicode__(self):
         return u"School Id: %s Username: %s Nickname: %s College: %s Grade: %s Major: %s Gender: %s" % (
                 self.school_id, self.username, self.nickname, self.college, 
-                self.grader, self.major, self.gender)
+                self.grade, self.major, self.gender)
