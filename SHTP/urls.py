@@ -1,8 +1,7 @@
 from django.conf.urls import patterns, include, url
-
 # Uncomment the next two lines to enable the admin:
-# from django.contrib import admin
-# admin.autodiscover()
+from django.contrib import admin
+admin.autodiscover()
 
 urlpatterns = patterns('',
     # Examples:
@@ -10,10 +9,10 @@ urlpatterns = patterns('',
     # url(r'^SHTP/', include('SHTP.foo.urls')),
 
     # Uncomment the admin/doc line below to enable admin documentation:
-    # url(r'^admin/doc/', include('django.contrib.admindocs.urls')),
+    url(r'^admin/doc/', include('django.contrib.admindocs.urls')),
 
     # Uncomment the next line to enable the admin:
-    # url(r'^admin/', include(admin.site.urls)),\
+    url(r'^admin/', include(admin.site.urls)),
 
     #URL about User
     url(r'users/register/$', 'users.views.register', name='user_register'),
@@ -25,8 +24,7 @@ urlpatterns = patterns('',
     url(r'^users/$', 'users.views.index', name='user_index'),
                        
     #URL about goods
-    url(r'^goods/(?P<filter_category>[a-z]+)/(?P<key_word>.*)$', 'goods.views.list_goods', name='goods_listall'),
-    #url(r'^goods/(?P<list_mode>[a-z]+)/$', 'goods.views.list_goods', name='goods_list'),
+    url(r'^goods/(?P<filter_category>\d+)/', 'goods.views.list_goods', name='goods_list'),
                        
 
 )

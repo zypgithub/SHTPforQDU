@@ -17,8 +17,8 @@ class UserProfile(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
 
     class Meta:
-        verbose_name = "Student"
-        verbose_name_plural = "Students"
+        verbose_name = "User"
+        verbose_name_plural = "User"
 
     def __unicode__(self):
         return u"School Id: %s Username: %s Nickname: %s College: %s Grade: %s Major: %s Gender: %s" % (

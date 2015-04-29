@@ -10,9 +10,10 @@ class goods(models.Model):
     description = models.CharField(max_length=10000)
     author = models.ForeignKey(User) 
     created_at = models.DateTimeField(auto_now_add=True)
-    browse_count = models.IntegerField()
+    browse_count = models.IntegerField(default=0)
     alter_at = models.DateTimeField(auto_now=True)
     goods_cover = models.ImageField(upload_to="Image")
+    price = models.DecimalField(max_digits=10, decimal_places=2)
 
 class photo(models.Model):
     photo = models.ImageField(upload_to="Image")
