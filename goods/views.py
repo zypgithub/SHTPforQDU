@@ -38,4 +38,10 @@ def list_goods(request, filter_category):
 
             
 
-            
+def get_image(request, image_name):
+    try:
+        image = open('/Image/'+ image_name).read()
+    except IOError:
+        print(image_name)
+    print(image_name)
+    return HttpResponse(image)

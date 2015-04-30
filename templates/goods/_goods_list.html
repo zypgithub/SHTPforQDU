@@ -9,7 +9,7 @@
     <tbody class="align-center" id="lesson_list">
         {% for item in goods %}
         <tr>
-            <td><a href="">{{ item.goods_cover }}</a></td>
+            <td><a href=""><img src='/{{ item.goods_cover }}'alt="商品图片"/></a></td>
             <td><a href="">{{ item.title }}</td>
             <td><a href="">{{ item.price }}</td>
             <td>{{ item.created_at|date:"Y年m月d日 h:i:s A"}}</td>
