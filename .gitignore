@@ -1,6 +1,5 @@
 *.py[cod]
 db.sql
-
 # C extensions
 *.so
 
