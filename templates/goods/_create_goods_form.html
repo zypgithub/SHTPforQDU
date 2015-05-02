@@ -1,0 +1,32 @@
+<form role="form" id="create_goods" action="#" method="POST">
+    {% csrf_token %}
+    <div class="form-group">
+        <label for="category_list">请选择商品种类</label>
+        <select class="form-control">
+            {% for item in categories %}
+            <option>{{item.name}}</option>
+            {% endfor %}
+        </select>
+    </div>
+    <div class="form-group">
+        <label for="name">商品名称</label>
+        <input type="text" maxlength="30" id="goods_name" placeholder="请输入商品名称" class="form-control" name="title" required="required" />
+    </div>
+    <div class="form-group">
+        <label for="content">商品描述</label>
+        <textarea class="form-control" rows="5" id="goods_description" placeholder="请输入商品描述" name="description" required="required"></textarea>
+    </div>
+    <div class="form-group">
+        <label for="name">联系方式</label>
+        <input type="text" maxlength="30" id="contact" placeholder="请说明您的联系方式,可以是QQ，E-mail或手机号码等" class="form-control" name="contact" required="required" />
+    </div>
+    <div class="form-group">
+        <label for="goods_cover">上传图片</label>
+        <input type="file" id="goods_cover" />
+        <p class="help-block">您上传的第一张照片将作为商品封面.</p>
+    </div>
+    <div>
+        <button type="submit_experiment" id="submit_goods" class="btn btn-primary btn-lg" name="submit">提交</button>
+        <button type="reset" class="btn btn-primary btn-lg" name="reset">重置</button>
+    </div>
+</form>

@@ -5,7 +5,7 @@ import json
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.models import User
 from django.db import IntegrityError
-from django.http import HttpResponse
+from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import redirect, render
 
 from users.forms import UserProfileForm
@@ -72,7 +72,11 @@ def user_login(request):
         user = authenticate(username=username, password=password)
         if isinstance(user, User):
             login(request, user)
-            return redirect('user_dashboard')
+            print(request.POST.get('next'))
+            if request.POST.get('next') == "":
+                return redirect('user_dashboard')
+            else:
+                return HttpResponseRedirect(request.POST.get('next'))
     return redirect('user_index')
     #TODO:登录失败（账户密码错误）的提示功能
 
@@ -88,4 +92,7 @@ def user_logout(request):
 
 
 def index(request):
+    if 'next' in request.GET:
+        return render(request, 'users/index.html', {'next': request.GET.get('next')})
+    else:
         return render(request, 'users/index.html')

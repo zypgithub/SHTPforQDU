@@ -4,6 +4,7 @@ from base64 import b64encode
 import json
 
 from django.contrib.auth import authenticate, login, logout
+from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 from django.db import IntegrityError
 from django.http import HttpResponse
@@ -45,3 +46,20 @@ def get_image(request, image_name):
         print(image_name)
     print(image_name)
     return HttpResponse(image)
+
+@login_required(login_url="/users/")
+def create_goods(request):
+    '''
+    if request.method == "POST":
+       form = createGoodsForm(request.POST)
+       if form.is_valid()
+    else:
+        return render(request, '',)
+        '''
+    categories = category.objects.values('name', 'production_count', 'id')
+    try:
+       nickname = UserProfile.objects.get(school_id=request.user.username).nickname
+    except UserProfile.DoesNotExist:
+        nickname = None 
+    if request.method == "GET":
+        return render(request, 'goods/create_goods.html', {'nickname': nickname, 'categories': categories})

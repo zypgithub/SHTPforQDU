@@ -1,5 +1,6 @@
 from django.conf.urls import patterns, include, url
 from django.conf.urls.static import static
+from django.contrib.auth import views as auth_views
 import settings
 # Uncomment the next two lines to enable the admin:
 from django.contrib import admin
@@ -27,7 +28,7 @@ urlpatterns = patterns('',
                        
     #URL about goods
     url(r'^goods/(?P<filter_category>\d+)/', 'goods.views.list_goods', name='goods_list'),
+    url(r'^goods/create/', 'goods.views.create_goods', name='goods_list'),
 
-#    url(r'^Image/(?P<image_name>.*)', 'goods.views.get_image', name='get_image'),
-    #url(r'^Image/(?P<path>.*)', 'django.views.static.serve', {'document_root': settings.MEDIA_ROOT}),
+
 ) + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
