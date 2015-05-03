@@ -7,11 +7,13 @@ from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 from django.db import IntegrityError
-from django.http import HttpResponse
+from django.http import HttpResponse, Http404
 from django.shortcuts import redirect, render
+from django.utils import simplejson
 
 from category.models import category
 from goods.models import goods
+from goods.form import GoodsForm, PhotoForm
 from users.models import UserProfile
 
 #todo: 关键词搜索
@@ -63,3 +65,14 @@ def create_goods(request):
         nickname = None 
     if request.method == "GET":
         return render(request, 'goods/create_goods.html', {'nickname': nickname, 'categories': categories})
+    else:
+        form = GoodsForm(request.POST, request.FILES)
+        if form.is_valid():
+            saved_goods = form.save(request.user, request.POST['category'])
+          #  photoform = PhotoForm(request.FILES['goods_photo_1'])
+          #  photoform.save(saved_goods)
+            myjson={"status": "success"}
+            return HttpResponse(simplejson.dumps(myjson))
+        else:
+            myjson={"status": "fail"}
+            return HttpResponse(simplejson.dumps(myjson))

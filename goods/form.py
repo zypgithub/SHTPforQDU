@@ -4,21 +4,33 @@
 from django import forms
 from django.forms import widgets
 
-from goods.models import goods
+from goods.models import goods, photo
 from category.models import category
 
 class GoodsForm(forms.ModelForm):
 
-    def save(self, author, category_id, **kwargs):
+    def save(self, user, category_id, **kwargs):
         form = super(GoodsForm, self).save(commit=False, **kwargs)
-        form.author = author
+        form.author = user
         selected_category = category.objects.get(id=category_id)
-        selected_category.production = selected_category.production + 1
-        selected_category.save()
+        form.category = selected_category
         form.save()
+        selected_category.production_count = selected_category.production_count + 1
+        selected_category.save()
 
     class Meta:
         model = goods
-        fields = ('title', 'description', 'goods_cover', 'price')
+        fields = ('title', 'description', 'goods_cover','price')
+
+class PhotoForm(forms.ModelForm):
+
+    def save(self, goods, **kwargs):
+        form = super(PhotoForm, self).save(commit=False, **kwargs)
+        form.goods = goods
+        form.save()
+
+    class Meta:
+        model = photo
+        fields = ('goods', 'photo')
 
 

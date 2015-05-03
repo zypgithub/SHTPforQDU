@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-import datetime
+from south.utils import datetime_utils as datetime
 from south.db import db
 from south.v2 import SchemaMigration
 from django.db import models
@@ -13,11 +13,14 @@ class Migration(SchemaMigration):
             (u'id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
             ('user', self.gf('django.db.models.fields.related.OneToOneField')(to=orm['auth.User'], unique=True)),
             ('school_id', self.gf('django.db.models.fields.CharField')(max_length=12)),
+            ('username', self.gf('django.db.models.fields.CharField')(max_length=30)),
             ('nickname', self.gf('django.db.models.fields.CharField')(max_length=30)),
             ('college', self.gf('django.db.models.fields.CharField')(max_length=30)),
             ('grade', self.gf('django.db.models.fields.CharField')(max_length=10)),
             ('major', self.gf('django.db.models.fields.CharField')(max_length=20)),
             ('gender', self.gf('django.db.models.fields.CharField')(max_length=1)),
+            ('telephone', self.gf('django.db.models.fields.CharField')(max_length=15)),
+            ('qq', self.gf('django.db.models.fields.CharField')(max_length=20)),
             ('created_at', self.gf('django.db.models.fields.DateTimeField')(auto_now_add=True, blank=True)),
         ))
         db.send_create_signal(u'users', ['UserProfile'])
@@ -74,8 +77,11 @@ class Migration(SchemaMigration):
             u'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
             'major': ('django.db.models.fields.CharField', [], {'max_length': '20'}),
             'nickname': ('django.db.models.fields.CharField', [], {'max_length': '30'}),
+            'qq': ('django.db.models.fields.CharField', [], {'max_length': '20'}),
             'school_id': ('django.db.models.fields.CharField', [], {'max_length': '12'}),
-            'user': ('django.db.models.fields.related.OneToOneField', [], {'to': u"orm['auth.User']", 'unique': 'True'})
+            'telephone': ('django.db.models.fields.CharField', [], {'max_length': '15'}),
+            'user': ('django.db.models.fields.related.OneToOneField', [], {'to': u"orm['auth.User']", 'unique': 'True'}),
+            'username': ('django.db.models.fields.CharField', [], {'max_length': '30'})
         }
     }
 

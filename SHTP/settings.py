@@ -168,6 +168,24 @@ LOGGING = {
     }
 }
 
+#settings about SESSION
+SESSION_ENGINE = "django.contrib.sessions.backends.cached_db" 
+#SESSION_ENGINE ='django.contrib.sessions.backends.db'
+#SESSION_ENGINE ='django.contrib.sessions.backends.file'
+#SESSION_ENGINE ='django.contrib.sessions.backends.cache'
+#SESSION_ENGINE ='django.contrib.sessions.backends.signed_cookies'
+
+# if need presistent session, set it as False and enable the ESSION_COOKIE_AGE
+SESSION_EXPIRE_AT_BROWSER_CLOSE = True
+# In seconds. Default = 2 weeks
+#SESSION_COOKIE_AGE = '10'
+#SESSION_COOKIE_SECURE = True
+
+
+
+
+
+
 """"
 if DEBUG:
     INTERNAL_IPS = ('127.0.0.1',)

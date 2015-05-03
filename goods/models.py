@@ -12,11 +12,26 @@ class goods(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     browse_count = models.IntegerField(default=0)
     alter_at = models.DateTimeField(auto_now=True)
-    goods_cover = models.ImageField(upload_to="Image")
+    goods_cover = models.ImageField(upload_to="../Image", default="Image/defaultPhotoNotFound", blank=False)
     price = models.DecimalField(max_digits=10, decimal_places=2)
+
+    class Meta:
+       verbose_name = "goods"
+       verbose_name_plural = "goods"
+    
+    def __unicode__(self):
+        return u"goods name: %s" % self.title
+
+
 
 class photo(models.Model):
     photo = models.ImageField(upload_to="Image")
     goods = models.ForeignKey(goods)
     upload_time = models.DateTimeField(auto_now_add=True)
 
+    class Meta:
+        verbose_name = "photo"
+        verbose_name_plural = "photo"
+
+    def __unicode__(self):
+        return u"photo belongs to %s" % self.goods
