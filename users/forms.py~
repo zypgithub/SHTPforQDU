@@ -5,7 +5,7 @@ from users.models import UserProfile
 class UserProfileForm(forms.ModelForm):
 
     def save(self, user, **kwargs):
-        form = super(UserProfileForm, self).save(commit=False,**kwargs)
+        form = super(UserProfileForm, self).save(commit=False)
         form.user = user
         form.save()
 

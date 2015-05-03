@@ -1,0 +1,19 @@
+<form role="form" action="#" method="POST" id="modify_user_form">
+    {% csrf_token %}
+    <div class="form-group">
+        <label for="name">nickname</label>
+        <input type="text" maxlength="30" id="name" placeholder="nickname" class="form-control" name="name" required="required" value="{{ UserProfileForm.nickname }}"/>
+    </div>
+    <div class="form-group">
+        <label for="content">telephone</label>
+        <input type="text" class="form-control" id="content" placeholder="telephone" name="content" value="{{ UserProfileForm.telephone}}"/>
+    </div>
+    <div class="form-group">
+        <label for="information">qq</label>
+        <input type="textarea" class="form-control" id="information" placeholder="qq" name="information" value="{{ UserProfileForm.qq }}"/>
+    </div>
+    <button type="submit" id="submit_modified_experiment" class="btn btn-primary btn-md" name="submit">修改</button>
+    <button type="reset" class="btn btn-info btn-md" name="reset">重置</button>
+    <button type="reset" class="btn btn-default btn-md" name="reset">返回</button>
+</form>
+

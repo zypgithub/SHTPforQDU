@@ -96,7 +96,8 @@ def user_logout(request):
 #@is_student()
 def user_modify(request,school_id):
     try:
-        user = UserProfile.objects.get(id=school_id) 
+        user = UserProfile.objects.get(id=school_id, 
+              student=request.user) 
     except UserProfile.DoesNotExist:
 	raise Http404
     if request.method == 'POST':
@@ -109,7 +110,7 @@ def user_modify(request,school_id):
             response = {"status": "ok"}
             return HttpResponse(simplejson.dumps(response))
         else:
-            #TODO: form error tip
+             TODO: form error tip
             response = {"status": "fail"}
             return HttpResponse(simplejson.dumps(response))
     else:
