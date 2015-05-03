@@ -14,6 +14,7 @@ class goods(models.Model):
     alter_at = models.DateTimeField(auto_now=True)
     goods_cover = models.ImageField(upload_to="../Image", default="Image/defaultPhotoNotFound", blank=False)
     price = models.DecimalField(max_digits=10, decimal_places=2)
+    contact = models.CharField(max_length=100, blank=False)
 
     class Meta:
        verbose_name = "goods"

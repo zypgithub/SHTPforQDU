@@ -72,7 +72,6 @@ def create_goods(request):
         if form.is_valid():
             form.save(request.user, request.POST['category'])
             myjson={"status": "success"}
-            return HttpResponse(simplejson.dumps(myjson))
         else:
             myjson={"status": "fail"}
-            return HttpResponse(simplejson.dumps(myjson))
+        return HttpResponse(simplejson.dumps(myjson))

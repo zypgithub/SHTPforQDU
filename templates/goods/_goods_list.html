@@ -11,7 +11,7 @@
         {% for item in goods %}
         <tr>
             <td><a href=""><img src='/{{ item.goods_cover }}'alt="商品图片" width="80px" height="60px"/></a></td>
-            <td valign="bottom"><a href="">{{ item.title }}</a></td>
+            <td><a href="">{{ item.title }}</a></td>
             <td><a href="">{{ item.price }}</td>
             <td>{{ item.created_at|date:"Y年m月d日 h:i:s A"}}</td>
          </tr>

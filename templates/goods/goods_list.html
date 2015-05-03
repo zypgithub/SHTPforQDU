@@ -1,5 +1,9 @@
 {% extends "goods/dashboard.html" %}
 
+{% block cssblock%}
+<link rel="stylesheet" type="text/css" href="{{ STATIC_URL }}css/goodslist.css" >
+{% endblock%}
+
 {% block right %}
     {% include "goods/_search_goods.html"%}
     {% include "goods/_goods_list.html" %}
