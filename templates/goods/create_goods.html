@@ -1,0 +1,10 @@
+{% extends 'goods/dashboard.html' %}
+
+
+{% block javascriptblock %}
+<script src="{{ STATIC_URL }}js/goods.js"></script>
+{% endblock %}
+
+{% block right %}
+{% include 'goods/_create_goods_form.html' %}
+{% endblock %}

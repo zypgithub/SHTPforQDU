@@ -1,0 +1,9 @@
+<div class="substance_left">
+	<ul class="nav nav-pills nav nav-stacked" >
+        <li><a href="{% url 'goods_list' 0 %}">全部</a></li>
+        {% for item in categories %}
+        <li><a href="{% url 'goods_list' item.id %}">{{ item.name }} ( {{ item.production_count }} )</a></li>
+        {% endfor %}
+	</ul>
+</div>
+

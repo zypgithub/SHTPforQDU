@@ -5,7 +5,7 @@ import json
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.models import User
 from django.db import IntegrityError
-from django.http import HttpResponse, Http404
+from django.http import HttpResponse, HttpResponseRedirect, Http404
 from django.shortcuts import redirect, render
 from django.utils import simplejson
 
@@ -77,7 +77,11 @@ def user_login(request):
         user = authenticate(username=username, password=password)
         if isinstance(user, User):
             login(request, user)
-            return redirect('user_dashboard')
+            print(request.POST.get('next'))
+            if request.POST.get('next') == "":
+                return redirect('user_dashboard')
+            else:
+                return HttpResponseRedirect(request.POST.get('next'))
     return redirect('user_index')
     #TODO:登录失败（账户密码错误）的提示功能
 
@@ -91,21 +95,34 @@ def user_logout(request):
     logout(request)
     return redirect('user_index')
 
+#@login_required()
+def user_profile(request):
+    return render(request, 'users/user_profile.html')
 
-#@login_required(login_url='student_index')
-#@is_student()
+#@login_required()
+def changepsw(request):
+    return render(request, 'users/changepsw.html')
+
+#@login_required()
 def user_modify(request,school_id):
     try:
-        user = UserProfile.objects.get(id=school_id) 
+        user = UserProfile.objects.get(school_id=school_id) 
     except UserProfile.DoesNotExist:
 	raise Http404
     if request.method == 'POST':
-        form = UserProfileForm(data=request.POST)
+        form = UserProfileForm(request.POST, instance = user)
+	print(request.POST['school_id'])
         if form.is_valid():
-            user.nickname = form.cleaned_data['nickname']
+            user.school_id = form.cleaned_data['school_id']
+	    user.username = form.cleaned_data['username']
+	    user.nickname = form.cleaned_data['nickname']
+	    user.college = form.cleaned_data['college']
+	    user.grade = form.cleaned_data['grade']
+	    user.major = form.cleaned_data['major']
+	    user.gender = form.cleaned_data['gender']
 	    user.telephone = form.cleaned_data['telephone']
             user.qq = form.cleaned_data['qq']
-            UserProfileForm.save()
+            user.save()
             response = {"status": "ok"}
             return HttpResponse(simplejson.dumps(response))
         else:
@@ -113,23 +130,13 @@ def user_modify(request,school_id):
             response = {"status": "fail"}
             return HttpResponse(simplejson.dumps(response))
     else:
-         return render(request, 'user_modify.html')
-
-#@login_required(login_url='student_index')
-def user_profile(request):
-    if request.method == 'POST':
-        form = UserProfileForm(data=request.POST,
-                               instance=request.user.profile)
-        if form.is_valid():
-            form.save()
-            response = {"status_phrase": "ok"}
-            return HttpResponse(simplejson.dumps(response))
-        else:
-            response = {"status_phrase": "fail"}
-            return HttpResponse(simplejson.dumps(response))
-    return HttpResponse('fail')
+         return render(request, 'users/user_modify.html',{'UserProfileForm': user})
 
 
+    
 
 def index(request):
+    if 'next' in request.GET:
+        return render(request, 'users/index.html', {'next': request.GET.get('next')})
+    else:
         return render(request, 'users/index.html')

@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-import datetime
+from south.utils import datetime_utils as datetime
 from south.db import db
 from south.v2 import SchemaMigration
 from django.db import models
@@ -8,23 +8,15 @@ from django.db import models
 class Migration(SchemaMigration):
 
     def forwards(self, orm):
-        # Adding field 'UserProfile.telephone'
-        db.add_column(u'users_userprofile', 'telephone',
-                      self.gf('django.db.models.fields.CharField')(default=0, max_length=15),
-                      keep_default=False)
-
-        # Adding field 'UserProfile.qq'
-        db.add_column(u'users_userprofile', 'qq',
-                      self.gf('django.db.models.fields.CharField')(default=0, max_length=20),
+        # Adding field 'goods.price'
+        db.add_column(u'goods_goods', 'price',
+                      self.gf('django.db.models.fields.DecimalField')(default=0, max_digits=10, decimal_places=2),
                       keep_default=False)
 
 
     def backwards(self, orm):
-        # Deleting field 'UserProfile.telephone'
-        db.delete_column(u'users_userprofile', 'telephone')
-
-        # Deleting field 'UserProfile.qq'
-        db.delete_column(u'users_userprofile', 'qq')
+        # Deleting field 'goods.price'
+        db.delete_column(u'goods_goods', 'price')
 
 
     models = {
@@ -57,6 +49,14 @@ class Migration(SchemaMigration):
             'user_permissions': ('django.db.models.fields.related.ManyToManyField', [], {'symmetrical': 'False', 'related_name': "u'user_set'", 'blank': 'True', 'to': u"orm['auth.Permission']"}),
             'username': ('django.db.models.fields.CharField', [], {'unique': 'True', 'max_length': '30'})
         },
+        u'category.category': {
+            'Meta': {'object_name': 'category'},
+            'alter_at': ('django.db.models.fields.DateTimeField', [], {'auto_now': 'True', 'blank': 'True'}),
+            'created_at': ('django.db.models.fields.DateTimeField', [], {'auto_now_add': 'True', 'blank': 'True'}),
+            u'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
+            'name': ('django.db.models.fields.CharField', [], {'unique': 'True', 'max_length': '100'}),
+            'production_count': ('django.db.models.fields.IntegerField', [], {'default': '0'})
+        },
         u'contenttypes.contenttype': {
             'Meta': {'ordering': "('name',)", 'unique_together': "(('app_label', 'model'),)", 'object_name': 'ContentType', 'db_table': "'django_content_type'"},
             'app_label': ('django.db.models.fields.CharField', [], {'max_length': '100'}),
@@ -64,21 +64,26 @@ class Migration(SchemaMigration):
             'model': ('django.db.models.fields.CharField', [], {'max_length': '100'}),
             'name': ('django.db.models.fields.CharField', [], {'max_length': '100'})
         },
-        u'users.userprofile': {
-            'Meta': {'object_name': 'UserProfile'},
-            'college': ('django.db.models.fields.CharField', [], {'max_length': '30'}),
+        u'goods.goods': {
+            'Meta': {'object_name': 'goods'},
+            'alter_at': ('django.db.models.fields.DateTimeField', [], {'auto_now': 'True', 'blank': 'True'}),
+            'author': ('django.db.models.fields.related.ForeignKey', [], {'to': u"orm['auth.User']"}),
+            'browse_count': ('django.db.models.fields.IntegerField', [], {'default': '0'}),
+            'category': ('django.db.models.fields.related.ForeignKey', [], {'to': u"orm['category.category']"}),
             'created_at': ('django.db.models.fields.DateTimeField', [], {'auto_now_add': 'True', 'blank': 'True'}),
-            'gender': ('django.db.models.fields.CharField', [], {'max_length': '1'}),
-            'grade': ('django.db.models.fields.CharField', [], {'max_length': '10'}),
+            'description': ('django.db.models.fields.CharField', [], {'max_length': '10000'}),
+            'goods_cover': ('django.db.models.fields.files.ImageField', [], {'max_length': '100'}),
             u'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
-            'major': ('django.db.models.fields.CharField', [], {'max_length': '20'}),
-            'nickname': ('django.db.models.fields.CharField', [], {'max_length': '30'}),
-            'qq': ('django.db.models.fields.CharField', [], {'max_length': '20'}),
-            'school_id': ('django.db.models.fields.CharField', [], {'max_length': '12'}),
-            'telephone': ('django.db.models.fields.CharField', [], {'max_length': '15'}),
-            'user': ('django.db.models.fields.related.OneToOneField', [], {'to': u"orm['auth.User']", 'unique': 'True'}),
-            'username': ('django.db.models.fields.CharField', [], {'max_length': '30'})
+            'price': ('django.db.models.fields.DecimalField', [], {'max_digits': '10', 'decimal_places': '2'}),
+            'title': ('django.db.models.fields.CharField', [], {'max_length': '100'})
+        },
+        u'goods.photo': {
+            'Meta': {'object_name': 'photo'},
+            'goods': ('django.db.models.fields.related.ForeignKey', [], {'to': u"orm['goods.goods']"}),
+            u'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
+            'photo': ('django.db.models.fields.files.ImageField', [], {'max_length': '100'}),
+            'upload_time': ('django.db.models.fields.DateTimeField', [], {'auto_now_add': 'True', 'blank': 'True'})
         }
     }
 
-    complete_apps = ['users']
+    complete_apps = ['goods']

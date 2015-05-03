@@ -9,6 +9,8 @@ ADMINS = (
 
 MANAGERS = ADMINS
 
+DEBUG_TOOLBAR_PATCH_SETTINGS = False
+
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3', # Add 'postgresql_psycopg2', 'mysql', 'sqlite3' or 'oracle'.
@@ -28,7 +30,7 @@ ALLOWED_HOSTS = []
 # http://en.wikipedia.org/wiki/List_of_tz_zones_by_name
 # although not all choices may be available on all operating systems.
 # In a Windows environment this must be set to your system time zone.
-TIME_ZONE = 'Asia/Shanghai'
+TIME_ZONE = 'Europe/Stockholm'
 
 # Language code for this installation. All choices can be found here:
 # http://www.i18nguy.com/unicode/language-identifiers.html
@@ -49,12 +51,14 @@ USE_TZ = True
 
 # Absolute filesystem path to the directory that will hold user-uploaded files.
 # Example: "/home/media/media.lawrence.com/media/"
-MEDIA_ROOT = ''
+PROJECT_ROOT = os.path.join(os.path.dirname(__file__), '../')
+SITE_ROOT = PROJECT_ROOT
+MEDIA_ROOT = os.path.join(SITE_ROOT, 'Image') 
 
 # URL that handles the media served from MEDIA_ROOT. Make sure to use a
 # trailing slash.
 # Examples: "http://media.lawrence.com/media/", "http://example.com/media/"
-MEDIA_URL = ''
+MEDIA_URL = '/Image/'
 
 # Absolute path to the directory static files should be collected to.
 # Don't put anything in this directory yourself; store your static files
@@ -101,6 +105,7 @@ MIDDLEWARE_CLASSES = (
     'django.contrib.messages.middleware.MessageMiddleware',
     # Uncomment the next line for simple clickjacking protection:
     # 'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'debug_toolbar.middleware.DebugToolbarMiddleware',
 )
 
 ROOT_URLCONF = 'SHTP.urls'
@@ -129,7 +134,9 @@ INSTALLED_APPS = (
      'south',
      'requests',
      'users',
-     'category'
+     'category',
+     'goods',
+     'debug_toolbar'
 )
 
 # A sample logging configuration. The only tangible logging
@@ -161,7 +168,25 @@ LOGGING = {
     }
 }
 
-"""
+#settings about SESSION
+SESSION_ENGINE = "django.contrib.sessions.backends.cached_db" 
+#SESSION_ENGINE ='django.contrib.sessions.backends.db'
+#SESSION_ENGINE ='django.contrib.sessions.backends.file'
+#SESSION_ENGINE ='django.contrib.sessions.backends.cache'
+#SESSION_ENGINE ='django.contrib.sessions.backends.signed_cookies'
+
+# if need presistent session, set it as False and enable the ESSION_COOKIE_AGE
+SESSION_EXPIRE_AT_BROWSER_CLOSE = True
+# In seconds. Default = 2 weeks
+#SESSION_COOKIE_AGE = '10'
+#SESSION_COOKIE_SECURE = True
+
+
+
+
+
+
+""""
 if DEBUG:
     INTERNAL_IPS = ('127.0.0.1',)
     MIDDLEWARE_CLASSES += (
@@ -171,11 +196,10 @@ if DEBUG:
     INSTALLED_APPS += (
         'debug_toolbar',
     )
-
     DEBUG_TOOLBAR_PANELS = (
         'debug_toolbar.panels.version.VersionDebugPanel',
         'debug_toolbar.panels.timer.TimerDebugPanel',
-        'debug_toolbar.panels.settings_vars.SettingsVarsDebugPanel',
+        #'debug_toolbar.panels.settings_vars.SettingsVarsDebugPanel',
         'debug_toolbar.panels.headers.HeaderDebugPanel',
         #'debug_toolbar.panels.profiling.ProfilingDebugPanel',
         'debug_toolbar.panels.request_vars.RequestVarsDebugPanel',
@@ -185,7 +209,6 @@ if DEBUG:
         'debug_toolbar.panels.signals.SignalDebugPanel',
         'debug_toolbar.panels.logger.LoggingPanel',
     )
-
     DEBUG_TOOLBAR_CONFIG = {
         'INTERCEPT_REDIRECTS': False,
     }

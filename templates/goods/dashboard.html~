@@ -1,0 +1,13 @@
+{% extends "two_columns.html" %}
+
+
+{% block nav_bar %}
+    {% include "goods/_nav_bar.html" %}
+    <li>当前登录用户为<a href="user_modify.html">{{ user.get_username }}</a></li>
+{% endblock %}
+
+
+{% block left %}
+    {% include "goods/_side_bar.html" %}
+{% endblock %}
+

@@ -1,6 +1,7 @@
 <div id="login_form" class="container col-md-offset-4 col-md-4">
     <form class="form-signin" action="{% url 'user_login' %}" method='post'>
         {% csrf_token %}
+        <input type="hidden" name="next" value="{{ next }}" />
         <div class="form-group">
             <label for="school_id">学号</label>
                 <input type="text" class="form-control input-lg" id='school_id' name='school_id' placeholder="请输入学号"> 
