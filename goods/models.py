@@ -25,7 +25,7 @@ class goods(models.Model):
 
 
 class photo(models.Model):
-    photo = models.ImageField(upload_to="Image")
+    photo = models.ImageField(upload_to="../Image")
     goods = models.ForeignKey(goods)
     upload_time = models.DateTimeField(auto_now_add=True)
 

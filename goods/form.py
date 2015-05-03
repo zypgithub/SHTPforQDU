@@ -20,7 +20,7 @@ class GoodsForm(forms.ModelForm):
 
     class Meta:
         model = goods
-        fields = ('title', 'description', 'goods_cover','price')
+        fields = ('title', 'description', 'goods_cover', 'price')
 
 class PhotoForm(forms.ModelForm):
 
@@ -31,6 +31,6 @@ class PhotoForm(forms.ModelForm):
 
     class Meta:
         model = photo
-        fields = ('goods', 'photo')
+        fields = ['photo',]
 
 

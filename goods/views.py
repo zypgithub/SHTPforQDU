@@ -67,10 +67,10 @@ def create_goods(request):
         return render(request, 'goods/create_goods.html', {'nickname': nickname, 'categories': categories})
     else:
         form = GoodsForm(request.POST, request.FILES)
+      #  photoform = PhotoForm(request.POST, request.FILES)
+        #if photoform.is_valid():
         if form.is_valid():
-            saved_goods = form.save(request.user, request.POST['category'])
-          #  photoform = PhotoForm(request.FILES['goods_photo_1'])
-          #  photoform.save(saved_goods)
+            form.save(request.user, request.POST['category'])
             myjson={"status": "success"}
             return HttpResponse(simplejson.dumps(myjson))
         else:
