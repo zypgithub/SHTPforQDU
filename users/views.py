@@ -77,7 +77,6 @@ def user_login(request):
         user = authenticate(username=username, password=password)
         if isinstance(user, User):
             login(request, user)
-            print(request.POST.get('next'))
             if request.POST.get('next') == "":
                 return redirect('user_dashboard')
             else:
@@ -85,8 +84,10 @@ def user_login(request):
     return redirect('user_index')
     #TODO:登录失败（账户密码错误）的提示功能
 
+
 def dashboard(request):
-    return render(request, 'users/dashboard.html')
+    userprofile = UserProfile.objects.get(user=request.user)
+    return render(request, 'users/dashboard.html', {"userprofile": userprofile})
 
 
 #@login_required(login_url='student_index')
@@ -104,23 +105,22 @@ def changepsw(request):
     return render(request, 'users/changepsw.html')
 
 #@login_required()
-def user_modify(request,school_id):
+def user_modify(request, school_id):
     try:
         user = UserProfile.objects.get(school_id=school_id) 
     except UserProfile.DoesNotExist:
-	raise Http404
+    	raise Http404
     if request.method == 'POST':
         form = UserProfileForm(request.POST, instance = user)
-	print(request.POST['school_id'])
         if form.is_valid():
             user.school_id = form.cleaned_data['school_id']
-	    user.username = form.cleaned_data['username']
-	    user.nickname = form.cleaned_data['nickname']
-	    user.college = form.cleaned_data['college']
-	    user.grade = form.cleaned_data['grade']
-	    user.major = form.cleaned_data['major']
-	    user.gender = form.cleaned_data['gender']
-	    user.telephone = form.cleaned_data['telephone']
+            user.username = form.cleaned_data['username']
+            user.nickname = form.cleaned_data['nickname']
+            user.college = form.cleaned_data['college']
+            user.grade = form.cleaned_data['grade']
+            user.major = form.cleaned_data['major']
+            user.gender = form.cleaned_data['gender']
+            user.telephone = form.cleaned_data['telephone']
             user.qq = form.cleaned_data['qq']
             user.save()
             response = {"status": "ok"}
@@ -130,7 +130,7 @@ def user_modify(request,school_id):
             response = {"status": "fail"}
             return HttpResponse(simplejson.dumps(response))
     else:
-         return render(request, 'users/user_modify.html',{'UserProfileForm': user})
+         return render(request, 'users/user_modify.html',{'userprofile': user})
 
 
     
