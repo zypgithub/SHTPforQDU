@@ -100,8 +100,29 @@ def user_profile(request):
     return render(request, 'users/user_profile.html')
 
 #@login_required()
-def changepsw(request):
-    return render(request, 'users/changepsw.html')
+def changepsw(request, school_id):
+    try:
+        user = UserProfile.objects.get(school_id=school_id) 
+    except UserProfile.DoesNotExist:
+	raise Http404      
+    if request.method == 'POST':
+        form = UserProfileForm(request.POST, instance = user)
+	if form.is_valid():  
+	    user = authenticate(username=username,password=data['password'])
+	    if user is not None:
+	        if form.cleaned_data['new_pwd'] ==form.cleaned_data['new_psw2']:
+	            newuser = User.objects.get(school_id = school_id)
+	            newuser.set_password(form.cleaned_date['new_pwd'])
+		    newuser.save()
+		    return HttpResponseRedirect('/users/')
+	        else:
+		    response = {"status": "fail1"}#error.append('Please input the same password')
+	    else:		      
+		 response = {"status": "fail2"}#error.append('Please correct the old password')
+	else:
+	     response = {"status": "fail3"}#error.append('Please input the required domain')
+    else:
+        return render(request, 'users/changepsw.html', {'UserProfileForm': user})
 
 #@login_required()
 def user_modify(request,school_id):
@@ -111,7 +132,6 @@ def user_modify(request,school_id):
 	raise Http404
     if request.method == 'POST':
         form = UserProfileForm(request.POST, instance = user)
-	print(request.POST['school_id'])
         if form.is_valid():
             user.school_id = form.cleaned_data['school_id']
 	    user.username = form.cleaned_data['username']
@@ -130,7 +150,7 @@ def user_modify(request,school_id):
             response = {"status": "fail"}
             return HttpResponse(simplejson.dumps(response))
     else:
-         return render(request, 'users/user_modify.html',{'UserProfileForm': user})
+        return render(request, 'users/user_modify.html',{'UserProfileForm': user})
 
 
     

@@ -1,0 +1,17 @@
+ <form role="form" action="#" method="POST" id="change_password_form">
+    {% csrf_token %}
+    <div class="form-group">
+        <label for="old_psw">旧密码</label>
+        <input type="text" maxlength="30" id="password" placeholder="请输入旧密码" class="form-control" name="password"/>
+    </div>
+    <div class="form-group">
+        <label for="new_psw">新密码</label>
+        <input type="text" maxlength="30" id="new_psw" placeholder="请输入新密码" class="form-control" name="new_psw" />
+    </div>
+    <div class="form-group">
+        <label for="new_psw2">重复新密码</label>
+        <input type="text" maxlength="30" id="new_psw2" placeholder="请重复输入新密码" class="form-control" name="new_psw2""/>
+    </div>
+    <button type="submit" id="submit_changed_password" class="btn btn-primary btn-md" name="submit">修改</button>
+    <button type="reset" class="btn btn-info btn-md" name="reset">重置</button>
+  </form>
