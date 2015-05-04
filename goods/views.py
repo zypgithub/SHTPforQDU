@@ -12,7 +12,7 @@ from django.shortcuts import redirect, render
 from django.utils import simplejson
 
 from category.models import category
-from goods.models import goods
+from goods.models import goods, photo
 from goods.form import GoodsForm, PhotoForm
 from users.models import UserProfile
 
@@ -76,3 +76,15 @@ def create_goods(request):
         else:
             myjson={"status": "fail"}
             return HttpResponse(simplejson.dumps(myjson))
+        
+
+def goods_details(request, goods_id):
+    try:
+        selected_goods = goods.objects.get(id=goods_id)
+    except goods.DoesNotExist:
+        return render(request, "404.html")
+    selected_photos = photo.objects.filter(goods=selected_goods)
+    if not request.user.is_authenticated():
+        selected_goods.contact = None
+        selected_goods.author = User()
+    return render(request, 'goods/goods_details.html', {"goods": selected_goods, "photos":selected_photos})

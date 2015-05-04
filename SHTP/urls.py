@@ -27,8 +27,9 @@ urlpatterns = patterns('',
     url(r'^users/$', 'users.views.index', name='user_index'),
                        
     #URL about goods
-    url(r'^goods/(?P<filter_category>\d+)/', 'goods.views.list_goods', name='goods_list'),
+    url(r'^goods/list/(?P<filter_category>\d+)/', 'goods.views.list_goods', name='goods_list'),
     url(r'^goods/create/', 'goods.views.create_goods', name='goods_list'),
+    url(r'^goods/(?P<goods_id>\d+)', 'goods.views.goods_details', name='goods_details'),
 
 
 ) + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
