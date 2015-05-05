@@ -1,5 +1,0 @@
-{% extends "users/dashboard.html" %}
-
-{% block right %}
-    {% include "users/_changepsw.html"%}
-{% endblock %}
