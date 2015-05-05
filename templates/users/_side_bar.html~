@@ -1,8 +1,8 @@
 <div class="substance_left">
 	<ul class="nav nav-pills nav nav-stacked" >
-		<li><a href="{% url 'user_profile' %}">查看个人信息</a></li>
+		<li><a href="{% url 'user_profile' 12345 %}">查看个人信息</a></li>
 		<li><a href="{% url 'user_modify' 12345 %}">修改个人信息</a></li>
-		<li><a href="{% url 'changepsw' %}">修改密码</a></li>
+		<li><a href="{% url 'changepsw' 12345 %}">修改密码</a></li>
 		<li><a href="#">选项4</a></li>
 		<li><a href="#">选项5</a></li>
 	</ul>

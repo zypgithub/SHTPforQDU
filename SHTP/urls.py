@@ -26,7 +26,7 @@ urlpatterns = patterns('',
     url(r'^users/dashboard/$', 'users.views.dashboard',name='user_dashboard'),
     url(r'^users/$', 'users.views.index', name='user_index'),
     url(r'^users/modify/(?P<school_id>\d+)/$', 'users.views.user_modify', name='user_modify'),
-    url(r'^users/profile/$', 'users.views.user_profile', name='user_profile'),
+    url(r'^users/profile/(?P<school_id>\d+)/$', 'users.views.user_profile', name='user_profile'),
     url(r'^users/changepsw/(?P<school_id>\d+)/$', 'users.views.changepsw', name='changepsw'),
    
                        
