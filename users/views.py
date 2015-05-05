@@ -28,7 +28,6 @@ def register(request):
         jw_password = request.POST.get("jw_password")
         captcha = request.POST.get("captcha")
         password = request.POST.get("password")
-        print school_id + jw_password + " " + captcha + password
         user_info = get_user_info(request, school_id, jw_password, captcha)
         status = user_info[-1]
         if status[0] == 200:
@@ -72,7 +71,6 @@ def user_login(request):
         user = authenticate(username=username, password=password)
         if isinstance(user, User):
             login(request, user)
-            print(request.POST.get('next'))
             if request.POST.get('next') == "":
                 return redirect('user_dashboard')
             else:

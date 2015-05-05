@@ -60,11 +60,12 @@ def create_goods(request):
         '''
     categories = category.objects.values('name', 'production_count', 'id')
     try:
-       nickname = UserProfile.objects.get(school_id=request.user.username).nickname
+       userprofile = UserProfile.objects.get(user=request.user)
     except UserProfile.DoesNotExist:
-        nickname = None 
+        userprofile = None 
     if request.method == "GET":
-        return render(request, 'goods/create_goods.html', {'nickname': nickname, 'categories': categories})
+        #print(userprofile.nickname)
+        return render(request, 'goods/create_goods.html', {'userprofile': userprofile, 'categories': categories})
     else:
         form = GoodsForm(request.POST, request.FILES)
       #  photoform = PhotoForm(request.POST, request.FILES)
@@ -79,12 +80,20 @@ def create_goods(request):
         
 
 def goods_details(request, goods_id):
+    categories = category.objects.values('name', 'production_count', 'id')
     try:
         selected_goods = goods.objects.get(id=goods_id)
     except goods.DoesNotExist:
         return render(request, "404.html")
     selected_photos = photo.objects.filter(goods=selected_goods)
-    if not request.user.is_authenticated():
+    if request.user.is_authenticated():
+        try:
+            userprofile = UserProfile.objects.get(user=request.user)
+        except UserProfile.DoesNotExist:
+            return render(request, "404.html")
+    else:
         selected_goods.contact = None
         selected_goods.author = User()
-    return render(request, 'goods/goods_details.html', {"goods": selected_goods, "photos":selected_photos})
+        userprofile = UserProfile()
+  
+    return render(request, 'goods/goods_details.html', {"goods": selected_goods, "photos": selected_photos, "categories": categories, "userprofile": userprofile})

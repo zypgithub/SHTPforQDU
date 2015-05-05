@@ -11,7 +11,7 @@
     
         <ul class="nav navbar-nav navbar-right">
         {% if user.is_authenticated %}
-            <li><a href="">你好 {{ nickname }}</a></li>
+            <li><a href="">你好 {{ userprofile.nickname }}</a></li>
             <li><a href="{% url 'user_logout' %}">登出</a></li>
         {% else %}
             <li><a>你好 游客 </a></li>
