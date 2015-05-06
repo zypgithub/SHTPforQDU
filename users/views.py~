@@ -34,6 +34,8 @@ def register(request):
         jw_password = request.POST.get("jw_password")
         captcha = request.POST.get("captcha")
         password = request.POST.get("password")
+        pswquestion = request.POST.get("pswquestion")
+        pswanwser = request.POST.get("pswanwser")
         print school_id + jw_password + " " + captcha + password
         user_info = get_user_info(request, school_id, jw_password, captcha)
         status = user_info[-1]
@@ -54,7 +56,7 @@ def register(request):
             response = {'status_code': status[0],
                         'error_info' : status[1]
                        }
-            #return HttpResponse(json.dumps(response))
+            return HttpResponse(json.dumps(response))
         return HttpResponse(status[1], content_type="text/html;charset=utf-8")
 
 def save_user(request):
@@ -120,8 +122,8 @@ def user_profile(request, school_id):
 	    user.telephone = form.cleaned_data['telephone']
             user.qq = form.cleaned_data['qq']
             response = {"status": "ok"}
-            return HttpResponseRedirect('/users/modify/12345/')
-           # return HttpResponse(simplejson.dumps(response))
+            return HttpResponseRedirect('/users/profile/(?P<school_id>\d+)/')
+            return HttpResponse(simplejson.dumps(response))
         else:
             #TODO: form error tip
             response = {"status": "fail"}
@@ -156,29 +158,44 @@ def user_modify(request, school_id):
             response = {"status": "fail"}
             return HttpResponse(simplejson.dumps(response))
     else:
-
-        #return render(request, 'users/user_modify.html',{'UserProfileForm': user})
-
          return render(request, 'users/user_modify.html',{'userprofile': user})
 
 
 #@login_required()
 def changepsw(request):
     if request.method == 'GET':
+        print(request.user.username)
         return render(request, 'users/changepsw.html', {'username': request.user.username})           
     if request.method == 'POST':
         new_psw = request.POST.get('new_psw') 
         new_psw2 = request.POST.get('new_psw2')
         if not new_psw or not new_psw2:
            response = {"status": "tianxiemima"}
+           return HttpResponse(simplejson.dumps(response)) 
         if new_psw != new_psw2:
            response = {"status": "buyiyang"}
+           return HttpResponse(simplejson.dumps(response)) 
         user = User.objects.get(username=request.user.username)
         user.set_password(new_psw)
         print(new_psw)
         user.save()
-    return redirect('user_dashboard') 
-     
+    return HttpResponseRedirect('/users/profile/(?P<school_id>\d+)/') 
+
+def retrievepsw(request):
+    if request.method == 'GET':
+        print(request.user.username)
+        return render(request, 'users/retrievepsw.html', {'username': request.user.username})     
+    if request.method == 'POST':
+        username = request.POST.get('username')
+        user = UserProfile.objects.get(username = username)
+        form = UserProfileForm(request.POST, instance = user)
+        if form.is_valid():
+            user.pswquestion = form.cleaned_data['pswquestion']
+            user.pswanwser = form.cleaned_data['pswanwser']
+            psw = user.get_password()
+            return HttpResponse("your psw is :"+psw, content_type="text/html")
+    response = {"status": "fail"}
+    return HttpResponse(simplejson.dumps(response)) 
     
 
 def index(request):

@@ -1,0 +1,17 @@
+<form role="form" action="#" method="POST" id="retrieve_password_form" >
+    {% csrf_token %} 
+    <div class="form-group">
+        <label for="username">用户名</label>
+        <input type="text" maxlength="30" id="username" placeholder="请输入用户名" class="form-control" name="username"/>
+    </div>
+    <div class="form-group">
+        <label for="pswquestion">密码提示问题&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label><tr class="active">{{ UserProfileForm.pswquestion }}</tr>
+    </div>
+    <div class="form-group">
+        <label for="pswanwser">答案</label>
+        <input type="text" maxlength="30" id="pswanwser" placeholder="请输入答案" class="form-control" name="pswanwser""/>
+    </div>
+   
+    <button type="submit" id="submit_retrieve_password" class="btn btn-primary btn-md" name="submit">确认</button>
+    <button type="reset" class="btn btn-info btn-md" name="reset">重置</button>
+  </form>

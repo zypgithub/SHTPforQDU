@@ -1,4 +1,4 @@
-{% extends "two_columns.html" %}
+{% extends "dashboard.html" %}
 
 {% block nav_bar %}
     {% include "users/_nav_bar.html" %}

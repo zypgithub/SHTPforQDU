@@ -28,6 +28,7 @@ urlpatterns = patterns('',
     url(r'^users/modify/(?P<school_id>\d+)/$', 'users.views.user_modify', name='user_modify'),
     url(r'^users/profile/(?P<school_id>\d+)/$', 'users.views.user_profile', name='user_profile'),
     url(r'^users/changepsw/$', 'users.views.changepsw', name='changepsw'),
+    url(r'^users/retrievepsw/$', 'users.views.retrievepsw', name='retrievepsw'),
    
                        
     #URL about goods
