@@ -3,10 +3,10 @@
         <!-- Indicators -->
         <ol class="carousel-indicators">
             {% if photos %}
-            <li data-target="#carousel-example-generic" data-slide-to="0" class="active"></li>
+            <li  data-slide-to="0" class="active"></li>
             {% endif %}
             {% for item in photos %}
-            <li data-target="#carousel-example-generic" data-slide-to="{{ forloop.counter  }}"></li>
+            <li  data-slide-to="{{ forloop.counter  }}"></li>
             {% endfor %}
         </ol>
 
@@ -16,7 +16,7 @@
                 <button type="button" class="clean_button" data-toggle="modal" data-target=".bs-example-modal-lg"><img src="{{ goods.goods_cover }}" height="200px" width="200px"></button>
                 <div class="modal fade bs-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
                     <div class="modal-dialog modal-lg">
-                        <div class="modal-content">
+                        <div class="">
                             <img src="{{ goods.goods_cover }}" width="800px">
                         </div>
                     </div>
@@ -24,11 +24,11 @@
             </div>
            {% for item in photos%}
             <div class="item">
-                <button type="button" class="clean_button" data-toggle="modal" data-target=".bs-example-modal-lg"><img src="Image/{{ item.photo }}" height="200px" width="200px"></button>
+                <button type="button" class="clean_button" data-toggle="modal" data-target=".bs-example-modal-lg"><img src="{{ item.photo }}" height="200px" width="200px"></button>
                 <div class="modal fade bs-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
                     <div class="modal-dialog modal-lg">
                         <div class="modal-content">
-                            <img src="Image/{{ item.photo }}" width="800px">
+                            <img src="{{ item.photo }}" width="800px">
                         </div>
                     </div>
                 </div>

@@ -28,16 +28,9 @@
         <label for="goods_cover">上传图片</label>
         <input type="file" id="goods_cover" name="goods_cover"/>
         <p class="help-block">您上传的第一张照片将作为商品封面.</p>
-        <label for="goods_cover">细节图1</label>
-        <input type="file" id="goods_photo" name="goods_photo"/>
-        <label for="goods_cover">细节图2</label>
-        <input type="file" id="goods_photo_2" name="goods_photo_2"/>
-        <label for="goods_cover">细节图3</label>
-        <input type="file" id="goods_photo_3" name="goods_photo_3"/>
-        <label for="goods_cover">细节图4</label>
-        <input type="file" id="goods_photo_4" name="goods_photo_4"/>
-        <label for="goods_cover">细节图5</label>
-        <input type="file" id="goods_photo_5" name="goods_photo_5"/>
+        <table>
+            {{ formset }}
+        </table>
 </div>
     <div>
         <button type="submit_goods" id="submit_goods" class="btn btn-primary btn-lg" name="submit">提交</button>

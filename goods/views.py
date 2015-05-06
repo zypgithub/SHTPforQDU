@@ -7,13 +7,14 @@ from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 from django.db import IntegrityError
+from django.forms.models import modelformset_factory
 from django.http import HttpResponse, Http404
 from django.shortcuts import redirect, render
 from django.utils import simplejson
 
 from category.models import category
 from goods.models import goods, photo
-from goods.form import GoodsForm, PhotoForm
+from goods.form import GoodsForm,BasePhotoFormSet
 from users.models import UserProfile
 
 #todo: 关键词搜索
@@ -64,14 +65,24 @@ def create_goods(request):
     except UserProfile.DoesNotExist:
         userprofile = None 
     if request.method == "GET":
-        #print(userprofile.nickname)
-        return render(request, 'goods/create_goods.html', {'userprofile': userprofile, 'categories': categories})
+        photo_factory = modelformset_factory(photo, extra = 4, fields={'photo',}, max_num=4)
+        formset = photo_factory()
+        return render(request, 'goods/create_goods.html', {'userprofile': userprofile, 'categories': categories, 'formset': formset})
     else:
+        photo_factory = modelformset_factory(photo, extra = 4, fields={'photo','goods'}, max_num=4)
         form = GoodsForm(request.POST, request.FILES)
-      #  photoform = PhotoForm(request.POST, request.FILES)
-        #if photoform.is_valid():
         if form.is_valid():
-            form.save(request.user, request.POST['category'])
+            g = form.save(request.user, request.POST['category'])
+            request.POST['form-0-goods'] = g.id
+            request.POST['form-1-goods'] = g.id
+            request.POST['form-2-goods'] = g.id
+            request.POST['form-3-goods'] = g.id
+            request.POST['form-4-goods'] = g.id
+            formset = photo_factory(request.POST, request.FILES)
+            if formset.is_valid():
+                formset.save()
+            else:
+                print(formset.errors)
             myjson={"status": "success"}
             return HttpResponse(simplejson.dumps(myjson))
         else:

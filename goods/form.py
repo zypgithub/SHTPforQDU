@@ -3,7 +3,9 @@
 
 from django import forms
 from django.forms import widgets
+from django.forms.models import BaseModelFormSet
 
+from django.db import models
 from goods.models import goods, photo
 from category.models import category
 
@@ -17,6 +19,7 @@ class GoodsForm(forms.ModelForm):
         form.save()
         selected_category.production_count = selected_category.production_count + 1
         selected_category.save()
+        return form
 
     class Meta:
         model = goods
@@ -33,4 +36,7 @@ class PhotoForm(forms.ModelForm):
         model = photo
         fields = ['photo',]
 
+class BasePhotoFormSet(BaseModelFormSet):
+    def add_fields(self, form, index):
+        super(BasePhotoFormSet, self).add_fields(form, index)
 
