@@ -1,52 +1,50 @@
-{% extends "dashboard.html" %}
+{% extends "base.html" %}
 
 {% block nav_bar %}
     {% include "users/_nav_bar.html" %}
 {% endblock %}
 
-
 {% block body %}
-
-<div id="register_box">
-    <h3 id="register">
-        注册     or
-        <span id="login"><a href="">登录</a></span>
-    </h3>
-<div id="register_form">
-    <form id="register" action="{% url 'user_register' %}" method="post">
+<div id="register" class="container col-md-offset-4 col-md-4">
+    <h2><span id="register"><a href="">新用户注册</a></span> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+    <span id="login"><a href="/users/">登录</a></span>
+    </h2>
+    <div id="register_form">
+        <form class="form-signin" id="register" action="{% url 'user_register' %}" method="post">
         {% csrf_token %}
-        <div class="form-group">
-            <label for="school_id">用户名</label>
-            <input type="text" id="school_id" name="school_id" placeholder="请输入学号">
-        </div>
- 	<div class="form-group">
-            <label for="jw_password">教务密码</label>
-            <input type="password" id="jw_password" name="jw_password" placeholder="请输入教务密码">
-        </div>
-	<div class="form-group">
-            <label for="password">登录密码</label>
-            <input type="password" name="password" id="password" placeholder="请输入登录密码">
-        </div>
-        <div class="form-group">
-            <select name="pswquestion" id="pswquestion">
-                <option selected="selected" value="" >请选择密码找回问题</option>
-                <option value="1">A</option>
-                <option value="2">B</option>
-                <option value="3">c</option>
-            </select>
-        </div>
-        <div class="form-group">
-            <label for="pswanwser">问题答案</label>
-            <input type="text" name="pswanwser" id="pswanwser" placeholder="请输入密码找回问题答案">
-        </div>
-        <div class="form-group">    
-            <label for="captcha">验证码</label>
-            <input type="captcha" id="captcha" name="captcha" placeholder="请输入验证码">
-                <img src="data:image/jpeg;base64,{{ captcha }}" />
-        </div>
-            <input type="submit" id="submit" value="register">
+            <div class="form-group">
+                <h4><label for="school_id">用户名</label></h4>
+                <input type="text" class="form-control input-lg" id="school_id" name="school_id" placeholder="请输入学号">
+            </div>
+ 	    <div class="form-group">
+                <h4><label for="jw_password">教务密码</label></h4>
+                <input type="password" class="form-control input-lg" id="jw_password" name="jw_password" placeholder="请输入教务密码">
+            </div>
+	    <div class="form-group">
+                <h4><label for="password">登录密码</label></h4>
+                <input type="password" class="form-control input-lg" name="password" id="password" placeholder="请输入登录密码">
+            </div>
+            <div class="form-group">
+                <h4><select name="pswquestion" class="form-control input-lg" id="pswquestion">
+                    <option selected="selected" value="" >请选择密码找回问题</option>
+                    <option value="1">您所就读的高中的名字</option>
+                    <option value="2">您父亲的名字</option>
+                    <option value="3">您母亲的名字</option>
+                </select></h4>
+            </div>
+            <div class="form-group">
+                <h4><label for="pswanwser">问题答案</label></h3>
+                <input type="text" class="form-control input-lg" name="pswanwser" id="pswanwser" placeholder="请输入密码找回问题答案">
+            </div>
+            <div class="form-group">    
+                <h3><label for="captcha">验证码</label></h4>
+                <input type="captcha" class="form-control input-lg" id="captcha" name="captcha" placeholder="请输入验证码">
+                    <img src="data:image/jpeg;base64,{{ captcha }}" />
+            </div>
+                <button type="submit" class="btn btn-lg btn-primary btn-block col-sm-4" value = "register">注册</button>
         </form>
     </div>
 </div>
 
 {% endblock %}
+
