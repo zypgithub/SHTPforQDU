@@ -163,16 +163,18 @@ def user_modify(request, school_id):
 
 
 #@login_required()
-def changepsw(request): 
+def changepsw(request):
+    if request.method == 'GET':
+        return render(request, 'users/changepsw.html', {'username': request.user.username})           
     if request.method == 'POST':
         new_psw = request.POST.get('new_psw') 
         new_psw2 = request.POST.get('new_psw2')
         if not new_psw or not new_psw2:
-           response = {"status": "tianxiemima"} 
+           response = {"status": "tianxiemima"}
         if new_psw != new_psw2:
            response = {"status": "buyiyang"}
         user = User.objects.get(username=request.user.username)
-        user.set_password('new_psw')
+        user.set_password(new_psw)
         print(new_psw)
         user.save()
     return redirect('user_dashboard') 
