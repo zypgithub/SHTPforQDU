@@ -6,6 +6,7 @@ import json
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
+from django.core.exceptions import FieldError
 from django.db import IntegrityError
 from django.forms.models import modelformset_factory
 from django.http import HttpResponse, Http404
@@ -14,7 +15,7 @@ from django.utils import simplejson
 
 from category.models import category
 from goods.models import goods, photo
-from goods.form import GoodsForm,BasePhotoFormSet
+from goods.form import GoodsForm,PhotoForm
 from users.models import UserProfile
 
 #todo: 关键词搜索
@@ -28,17 +29,33 @@ def list_goods(request, filter_category):
        nickname = UserProfile.objects.get(school_id=request.user.username).nickname
     except UserProfile.DoesNotExist:
         nickname = None
-    if filter_category == "0":#如果列表模式为0,则表示列出所有物品
-        selected_goods = goods.objects.all()
+    print(filter_category)
+    if filter_category == "0" or filter_category == '':#如果列表模式为0,则表示列出所有物品
+        if 'order' in request.GET:
+            order = request.GET['order']
+            try:
+                selected_goods = goods.objects.all().order_by(order)
+                print(order)
+            except FieldError:
+                return  HttpResponse('404')
+        else: 
+            selected_goods = goods.objects.all().order_by('-created_at')
+            order='-create_at'
     else:
         try:
             selected_category = category.objects.get(id=filter_category)
-            selected_goods = goods.objects.filter(category=selected_category)
-        except goods.DoesNotExist:
-            selected_goods = []
         except category.DoesNotExist:
            return  HttpResponse('404')
-    return render(request, 'goods/goods_list.html', {'nickname': nickname, 'categories': categories, 'goods': selected_goods})
+        if 'order' in request.GET:
+            order = request.GET['order']
+            try:
+                selected_goods = goods.objects.filter(category=selected_category).order_by(order)
+            except FieldError:
+                return  HttpResponse('404')
+        else: 
+            selected_goods = goods.objects.filter(category=selected_category).order_by('-created_at')
+            order = '-create_at'
+    return render(request, 'goods/goods_list.html', {'nickname': nickname, 'categories': categories, 'goods': selected_goods, 'order': order, 'category': filter_category})
 
             
 
@@ -65,24 +82,16 @@ def create_goods(request):
     except UserProfile.DoesNotExist:
         userprofile = None 
     if request.method == "GET":
-        photo_factory = modelformset_factory(photo, extra = 4, fields={'photo',}, max_num=4)
-        formset = photo_factory()
-        return render(request, 'goods/create_goods.html', {'userprofile': userprofile, 'categories': categories, 'formset': formset})
+        return render(request, 'goods/create_goods.html', {'userprofile': userprofile, 'categories': categories, })
     else:
-        photo_factory = modelformset_factory(photo, extra = 4, fields={'photo','goods'}, max_num=4)
         form = GoodsForm(request.POST, request.FILES)
         if form.is_valid():
             g = form.save(request.user, request.POST['category'])
-            request.POST['form-0-goods'] = g.id
-            request.POST['form-1-goods'] = g.id
-            request.POST['form-2-goods'] = g.id
-            request.POST['form-3-goods'] = g.id
-            request.POST['form-4-goods'] = g.id
-            formset = photo_factory(request.POST, request.FILES)
-            if formset.is_valid():
-                formset.save()
-            else:
-                print(formset.errors)
+            photos = []
+            for i in range(1, 5):
+                photos.append(PhotoForm(request.POST, request.FILES, prefix=i))
+                if photos[i - 1].is_valid():
+                    photos[i - 1].save(g)
             myjson={"status": "success"}
             return HttpResponse(simplejson.dumps(myjson))
         else:
@@ -106,5 +115,23 @@ def goods_details(request, goods_id):
         selected_goods.contact = None
         selected_goods.author = User()
         userprofile = UserProfile()
-  
-    return render(request, 'goods/goods_details.html', {"goods": selected_goods, "photos": selected_photos, "categories": categories, "userprofile": userprofile})
+    if request.user == selected_goods.author:
+        is_myself = True
+    else:
+        is_myself = False
+    return render(request, 'goods/goods_details.html', {"goods": selected_goods, "photos": selected_photos, "categories": categories, "userprofile": userprofile, "is_myself": is_myself})
+
+@login_required(login_url="/users/")
+def delete_goods(request, goods_id):
+    try:
+        selected_goods = goods.objects.get(id=goods_id)
+    except goods.DoesNotExist:
+        response = {'error_code': '110', 'status': 'fail'}
+        return HttpResponse(json.dumps(response))
+    if selected_goods.author != request.user:
+        response = {'error_code': '111', 'status': 'fail'}
+        return HttpResponse(json.dumps(response))
+    selected_goods.delete()
+    response = {'status': 'success'}
+    return HttpResponse(json.dumps(response))
+

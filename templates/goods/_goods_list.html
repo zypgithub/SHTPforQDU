@@ -4,15 +4,15 @@
     <thead class="align-center">
         <th class="align-center" id="goods_photo" >商品展示</th>
         <th class="align-center" id="goods_name" >商品名称</th>
-        <th class="align-center" id="goods_price" >价格</th>
-        <th class="align-center" id="goods_publishtime" >发布时间</th>
+        <th class="align-center" id="goods_price" ><a href="{% url 'goods_list' category %}?order={% if order == 'price' %}-price{% else %}price{% endif%}">价格</a></th>
+        <th class="align-center" id="goods_publishtime" ><a href="{% url 'goods_list' category %}?order={% if order == 'created_at' %}-created_at{% else %}created_at{% endif %}">发布时间</a></th>
     </thead>
     <tbody class="align-center" id="lesson_list">
         {% for item in goods %}
         <tr>
             <td><a href="{% url 'goods_details' item.id %}"><img src='/{{ item.goods_cover }}'alt="商品图片" width="100px" height="80px"/></a></td>
-            <td><a href="{% url 'goods_details' item.id %}">{{ item.title }}</a></td>
-            <td><a href="{% url 'goods_details' item.id %}">{{ item.price }}</td>
+            <td class="title"><p><a href="{% url 'goods_details' item.id %}">{{ item.title }}</a></p></td>
+            <td class="price"> ¥ {{ item.price }}</td>
             <td>{{ item.created_at|date:"Y年m月d日 h:i:s A"}}</td>
          </tr>
         {% endfor %}

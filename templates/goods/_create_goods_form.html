@@ -10,7 +10,7 @@
     </div>
     <div class="form-group">
         <label for="name">商品名称</label>
-        <input type="text" maxlength="30" id="goods_name" placeholder="请输入商品名称" class="form-control" name="title" required="required" />
+        <input type="text" maxlength="100" id="goods_name" placeholder="请输入商品名称" class="form-control" name="title" required="required" />
     </div>
     <div class="form-group">
         <label for="content">商品描述</label>
@@ -28,9 +28,11 @@
         <label for="goods_cover">上传图片</label>
         <input type="file" id="goods_cover" name="goods_cover"/>
         <p class="help-block">您上传的第一张照片将作为商品封面.</p>
-        <table>
-            {{ formset }}
-        </table>
+        <input type="file" class = "details_photo" id="id_1-photo" name="1-photo"/>
+        <input type="file" class = "details_photo" id="id_2-photo" name="2-photo"/>
+        <input type="file" class = "details_photo" id="id_3-photo" name="3-photo"/>
+        <input type="file" class = "details_photo" id="id_4-photo" name="4-photo"/>
+        <input type="file" class = "details_photo" id="id_5-photo" name="5-photo"/>
 </div>
     <div>
         <button type="submit_goods" id="submit_goods" class="btn btn-primary btn-lg" name="submit">提交</button>

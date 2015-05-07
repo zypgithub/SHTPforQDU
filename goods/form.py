@@ -36,7 +36,3 @@ class PhotoForm(forms.ModelForm):
         model = photo
         fields = ['photo',]
 
-class BasePhotoFormSet(BaseModelFormSet):
-    def add_fields(self, form, index):
-        super(BasePhotoFormSet, self).add_fields(form, index)
-

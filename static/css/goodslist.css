@@ -1,10 +1,14 @@
 #goods_photo
 {
-    width: 130px;
+    width: 150px;
 }
 #goods_price
 {
-    width: 70px;
+    width: 200px;
+}
+#goods_price a, #goods_publishtime a
+{
+    color:black;
 }
 #goods_publishtime
 {
@@ -12,5 +16,20 @@
 }
 #goods_name
 {
-    width:auto;
+    width: auto;
 }
+.price
+{
+    color: red;
+    width:150px;
+}
+.title
+{
+    text-align: left;
+}
+.title a
+{
+    color:black;
+}
+.title a:link {color: black; text-decoration:none;} 
+.title a:hover {color: #f40} 
