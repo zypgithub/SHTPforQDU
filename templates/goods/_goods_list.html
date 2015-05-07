@@ -4,8 +4,8 @@
     <thead class="align-center">
         <th class="align-center" id="goods_photo" >商品展示</th>
         <th class="align-center" id="goods_name" >商品名称</th>
-        <th class="align-center" id="goods_price" ><a href="{% url 'goods_list' category %}?order={% if order == 'price' %}-price{% else %}price{% endif%}">价格</a></th>
-        <th class="align-center" id="goods_publishtime" ><a href="{% url 'goods_list' category %}?order={% if order == 'created_at' %}-created_at{% else %}created_at{% endif %}">发布时间</a></th>
+        <th class="align-center" id="goods_price" ><a href="{% url 'goods_list' category %}?order={% if order == 'price' %}-price{% else %}price{% endif%}&search={{ search_keyword }}">价格</a></th>
+        <th class="align-center" id="goods_publishtime" ><a href="{% url 'goods_list' category %}?order={% if order == 'created_at' %}-created_at{% else %}created_at{% endif %}&search={{ search_keyword }}">发布时间</a></th>
     </thead>
     <tbody class="align-center" id="lesson_list">
         {% for item in goods %}

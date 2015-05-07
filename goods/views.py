@@ -18,6 +18,7 @@ from goods.models import goods, photo
 from goods.form import GoodsForm,PhotoForm
 from users.models import UserProfile
 
+from django.db.models import Q
 #todo: 关键词搜索
 def list_goods(request, filter_category):
     categories = category.objects.values('name', 'production_count', 'id')
@@ -29,18 +30,29 @@ def list_goods(request, filter_category):
        nickname = UserProfile.objects.get(school_id=request.user.username).nickname
     except UserProfile.DoesNotExist:
         nickname = None
-    print(filter_category)
+    if 'search' in request.GET:
+        search_keyword = request.GET['search']
+    else:
+        search_keyword = ''
+    qset = search_keyword.split(' ')
+    query = Q()
+    for keyword in qset:
+        query = query & Q(title__contains=keyword)
+
     if filter_category == "0" or filter_category == '':#如果列表模式为0,则表示列出所有物品
         if 'order' in request.GET:
             order = request.GET['order']
             try:
-                selected_goods = goods.objects.all().order_by(order)
-                print(order)
+                if search_keyword != '':
+                    selected_goods = goods.objects.filter(query).order_by(order)
+                else:
+                    selected_goods = goods.objects.all().order_by(order)
             except FieldError:
                 return  HttpResponse('404')
         else: 
             selected_goods = goods.objects.all().order_by('-created_at')
-            order='-create_at'
+            order='-created_at'
+       
     else:
         try:
             selected_category = category.objects.get(id=filter_category)
@@ -49,13 +61,18 @@ def list_goods(request, filter_category):
         if 'order' in request.GET:
             order = request.GET['order']
             try:
-                selected_goods = goods.objects.filter(category=selected_category).order_by(order)
+                if search_keyword != '':
+                    query = query & Q(category=selected_category)
+                    selected_goods = goods.objects.filter(query).order_by(order)
+                else:
+                    selected_goods = goods.objects.filter(category=selected_category).order_by(order)
             except FieldError:
                 return  HttpResponse('404')
         else: 
             selected_goods = goods.objects.filter(category=selected_category).order_by('-created_at')
-            order = '-create_at'
-    return render(request, 'goods/goods_list.html', {'nickname': nickname, 'categories': categories, 'goods': selected_goods, 'order': order, 'category': filter_category})
+            order = '-created_at'
+            
+    return render(request, 'goods/goods_list.html', {'nickname': nickname, 'categories': categories, 'goods': selected_goods, 'order': order, 'category': filter_category, 'search_keyword': search_keyword})
 
             
 
