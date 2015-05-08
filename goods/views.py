@@ -86,13 +86,6 @@ def get_image(request, image_name):
 
 @login_required(login_url="/users/")
 def create_goods(request):
-    '''
-    if request.method == "POST":
-       form = createGoodsForm(request.POST)
-       if form.is_valid()
-    else:
-        return render(request, '',)
-        '''
     categories = category.objects.values('name', 'production_count', 'id')
     try:
        userprofile = UserProfile.objects.get(user=request.user)
@@ -152,3 +145,16 @@ def delete_goods(request, goods_id):
     response = {'status': 'success'}
     return HttpResponse(json.dumps(response))
 
+@login_required(login_url="/users/")
+def modify_goods(request, goods_id):
+    categories = category.objects.values('name', 'production_count', 'id')
+    try:
+        selected_goods = goods.objects.get(id=goods_id)
+    except goods.DoesNotExist:
+        return render(request, '404.html')
+    if selected_goods.author != request.user:
+        return render(request, '404.html')
+    if request.method == "GET":
+        return render(request, 'goods/modify_goods.html', { 'categories':categories, 'goods': selected_goods })
+    else:
+        psss

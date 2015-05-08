@@ -31,5 +31,6 @@ urlpatterns = patterns('',
     url(r'^goods/create/$', 'goods.views.create_goods', name='goods_list'),
     url(r'^goods/delete/(?P<goods_id>\d+)$', 'goods.views.delete_goods', name='delete_goods'),
     url(r'^goods/(?P<goods_id>\d+)$', 'goods.views.goods_details', name='goods_details'),
+    url(r'^goods/modify/(?P<goods_id>\d+)$', 'goods.views.modify_goods', name='modify_goods'),
 
     ) + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

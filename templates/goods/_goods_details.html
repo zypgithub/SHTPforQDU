@@ -1,6 +1,6 @@
 {% if is_myself %}
 <div id="operations">
-    <a><button type="submit" class="btn btn-success">修改信息</button></a>
+    <a href="{% url 'modify_goods' goods.id %}"><button type="submit" class="btn btn-success">修改信息</button></a>
     <button type="button" class="btn btn-info" data-toggle="modal" data-target=".bs-example-modal-sm">删除该条信息</button></a>
     <div class="modal fade bs-example-modal-sm" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-sm">
