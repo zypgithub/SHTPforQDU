@@ -73,6 +73,9 @@
     <div id="nologin">您还未登陆，无法查看卖家及其联系方式。&nbsp<a href="{% url 'user_index' %}?next={% url 'goods_details' goods.id %}">点击此处登陆</a></div>
     {% endif %}
 </div>
+<div id="LookThroughTimes">
+    <label>查看次数: </label> <span> {{ goods.browse_count }} </span>
+</div>
 <div id="goods_description">
     <pre>{{ goods.description }}</pre>
 </div>

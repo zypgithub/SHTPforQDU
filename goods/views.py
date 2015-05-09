@@ -116,6 +116,8 @@ def goods_details(request, goods_id):
     except goods.DoesNotExist:
         return render(request, "404.html")
     selected_photos = photo.objects.filter(goods=selected_goods)
+    selected_goods.browse_count += 1
+    selected_goods.save()
     if request.user.is_authenticated():
         try:
             userprofile = UserProfile.objects.get(user=request.user)
@@ -129,6 +131,7 @@ def goods_details(request, goods_id):
         is_myself = True
     else:
         is_myself = False
+    
     return render(request, 'goods/goods_details.html', {"goods": selected_goods, "photos": selected_photos, "categories": categories, "userprofile": userprofile, "is_myself": is_myself})
 
 @login_required(login_url="/users/")
@@ -154,7 +157,21 @@ def modify_goods(request, goods_id):
         return render(request, '404.html')
     if selected_goods.author != request.user:
         return render(request, '404.html')
+    photos = photo.objects.filter(goods=selected_goods)
     if request.method == "GET":
-        return render(request, 'goods/modify_goods.html', { 'categories':categories, 'goods': selected_goods })
+        return render(request, 'goods/modify_goods.html', { 'categories':categories, 'goods': selected_goods, 'photos': photos })
     else:
-        psss
+        updated_form = PhotoForm(data=request.POST)
+        if updated_form.is_valid():
+            selected_goods.category = updated_form.cleaned_data['category']
+            selected_goods.title = updated_form.cleaned_data['title']
+            selected_goods.description = updated_form.cleaned_data['description']
+            selected_goods.price = updated_form.cleaned_data['price']
+            selected_goods.contact = updated_form.cleaned_data['contact']
+            selected_goods.goods_cover = updated_form.cleaned_data['goods_cover']
+            selected_goods.save()
+            response = {"status_phrase": "success"}
+            return HttpResponse(simplejson.dumps(response))
+        else:
+            response = {"status_phrase": "fail"}
+            return HttpResponse(simplejson.dumps(response))

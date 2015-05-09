@@ -1,28 +1,32 @@
-<form role="form" id="create_goods" enctype="multipart/form-data" action="#" method="POST">
+<form role="form" id="modify_goods" enctype="multipart/form-data" action="#" method="POST">
     {% csrf_token %}
     <div class="form-group">
         <label for="category_list">请选择商品种类</label>
         <select class="form-control" name="category" required="required" >
             {% for item in categories %}
+            {% if goods.category.name == item.name %}
+            <option value="{{ item.id }}" selected="selected" >{{ item.name }}</option>
+            {% else %}
             <option value="{{ item.id }}">{{ item.name }}</option>
+            {% endif %}
             {% endfor %}
         </select>
     </div>
     <div class="form-group">
         <label for="name">商品名称</label>
-        <input type="text" maxlength="100" id="goods_name" placeholder="请输入商品名称" class="form-control" name="title" required="required" />
+        <input type="text" maxlength="100" id="goods_name" placeholder="请输入商品名称" class="form-control" name="title" required="required" value="{{ goods.title }}" />
     </div>
     <div class="form-group">
         <label for="content">商品描述</label>
-        <textarea class="form-control" rows="5" id="goods_description" placeholder="请输入商品描述，例如颜色、样式等特点" name="description" required="required"></textarea>
+        <textarea class="form-control" rows="5" id="goods_description" placeholder="请输入商品描述，例如颜色、样式等特点" name="description" required="required" >{{ goods.description }}</textarea>
     </div>
     <div class="form-group">
-        <label for="name">联系方式</label>
-        <input type="text" maxlength="30" id="contact" placeholder="请说明您的联系方式,可以是QQ，E-mail或手机号码等" class="form-control" name="contact" required="required" />
+        <label for="name" >联系方式</label>
+        <input type="text" maxlength="30" id="contact" placeholder="请说明您的联系方式,可以是QQ，E-mail或手机号码等" class="form-control" name="contact" value="{{ goods.contact }}" required="required" />
     </div>
     <div class="form-group">
         <label for="goods_price">价格</label>
-        <input type="text" maxlength="30" id="contact" placeholder="请输入您商品的价格" class="form-control" name="price" required="required" />
+        <input type="text" maxlength="30" id="contact" placeholder="请输入您商品的价格" class="form-control" name="price" required="required" value="{{ goods.price }}" />
     </div>
     <div id="filesform">
         <label for="goods_cover">上传图片</label>
