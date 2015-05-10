@@ -35,4 +35,4 @@ class photo(models.Model):
         verbose_name_plural = "photo"
 
     def __unicode__(self):
-        return u"photo belongs to %s" % self.goods
+        return u"photo belongs to %s, photo:%s" % (self.goods, self.photo)

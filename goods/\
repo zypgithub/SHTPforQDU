@@ -179,11 +179,12 @@ def modify_goods(request, goods_id):
             for i in range(1, 5):
                 updated_photos.append(PhotoForm(request.POST, request.FILES, prefix=i))
                 if updated_photos[i - 1].is_valid():
-                    temp = photos[i - 1]
-                    
-                    photos[i - 1] = 1
-                    #updated_photos[i - 1].save(selected_goods)
-                    temp.delete()
+                    updated_photos[i-1].fake_save()
+                    print(updated_photos[i - 1].cleaned_data['photo'])
+                    print(photos[i - 1].photo)
+                    photos[i - 1].photo = updated_photos[i - 1].cleaned_data['photo']
+                    print(photos[i - 1].photo)
+                    photos[i - 1].save()
             response = {"status_phrase": "success"}
             return HttpResponse(simplejson.dumps(response))
         else:

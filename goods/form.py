@@ -32,6 +32,9 @@ class PhotoForm(forms.ModelForm):
         form.goods = goods
         form.save()
 
+    def fake_save(self, **kwargs):
+        super(PhotoForm, self).save(commit=False, **kwargs)
+
     class Meta:
         model = photo
         fields = ['photo',]
