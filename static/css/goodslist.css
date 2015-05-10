@@ -1,3 +1,16 @@
+#create_button
+{
+    float:right;
+    width:150px;
+    margin-top: -50px;
+}
+#search_form
+{
+}
+#create_button button
+{
+    width:150px;
+}
 #goods_photo
 {
     width: 150px;

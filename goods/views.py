@@ -22,12 +22,10 @@ from django.db.models import Q
 #todo: 关键词搜索
 def list_goods(request, filter_category):
     categories = category.objects.values('name', 'production_count', 'id')
-    if 'search' in request.GET:
-        search_word = request.GET['search']
     try:
-       nickname = UserProfile.objects.get(school_id=request.user.username).nickname
+        userprofile = UserProfile.objects.get(user=request.user)
     except UserProfile.DoesNotExist:
-        nickname = None
+        userprofile = None
     if 'search' in request.GET:
         search_keyword = request.GET['search']
     else:
@@ -50,7 +48,6 @@ def list_goods(request, filter_category):
         else: 
             selected_goods = goods.objects.all().order_by('-created_at')
             order='-created_at'
-       
     else:
         try:
             selected_category = category.objects.get(id=filter_category)
@@ -69,8 +66,7 @@ def list_goods(request, filter_category):
         else: 
             selected_goods = goods.objects.filter(category=selected_category).order_by('-created_at')
             order = '-created_at'
-            
-    return render(request, 'goods/goods_list.html', {'nickname': nickname, 'categories': categories, 'goods': selected_goods, 'order': order, 'category': filter_category, 'search_keyword': search_keyword})
+    return render(request, 'goods/goods_list.html', {'userprofile': userprofile, 'categories': categories, 'goods': selected_goods, 'order': order, 'category': filter_category, 'search_keyword': search_keyword})
 
             
 
@@ -141,6 +137,8 @@ def delete_goods(request, goods_id):
     if selected_goods.author != request.user:
         response = {'error_code': '111', 'status': 'fail'}
         return HttpResponse(json.dumps(response))
+    selected_goods.category.production_count -=1
+    selected_goods.category.save()
     selected_goods.delete()
     response = {'status': 'success'}
     return HttpResponse(json.dumps(response))
@@ -172,18 +170,26 @@ def modify_goods(request, goods_id):
             selected_goods.description = updated_form.cleaned_data['description']
             selected_goods.price = updated_form.cleaned_data['price']
             selected_goods.contact = updated_form.cleaned_data['contact']
+            if 'pre_cover' in request.POST:
+                selected_goods.goods_cover = 'Image/defaultPhotoNotFound'
             if 'goods_cover' in request.FILES:
                 selected_goods.goods_cover = updated_form.cleaned_data['goods_cover']
+            newcategory.production_count +=1
+            newcategory.save()
             selected_goods.save()
             updated_photos = []
+            to_deleted_photos = []
+            length = len(photos)
             for i in range(1, 5):
                 updated_photos.append(PhotoForm(request.POST, request.FILES, prefix=i))
                 if updated_photos[i - 1].is_valid():
-                    temp = photos[i - 1]
-                    
-                    photos[i - 1] = 1
-                    #updated_photos[i - 1].save(selected_goods)
-                    temp.delete()
+                    updated_photos[i - 1].save(selected_goods)
+                    if i <= length:
+                        to_deleted_photos.append(photos[i - 1])
+                if str(i) + '_pho' in request.POST:
+                    photo.objects.get(id = request.POST[str(i)+'_pho']).delete()
+            for item in to_deleted_photos:
+                item.delete()
             response = {"status_phrase": "success"}
             return HttpResponse(simplejson.dumps(response))
         else:
