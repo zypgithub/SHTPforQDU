@@ -11,8 +11,8 @@ class UserProfile(models.Model):
     grade = models.CharField(max_length=10, null=False, blank=False)
     major = models.CharField(max_length=20, null=False, blank=False)
     gender = models.CharField(max_length=1, null=False, blank=False)
-    telephone = models.CharField(max_length=15, null=False, blank=False)
-    qq = models.CharField(max_length=20, null=False, blank=False)
+    telephone = models.CharField(max_length=15, blank=True)
+    qq = models.CharField(max_length=20, blank=True)
     
     created_at = models.DateTimeField(auto_now_add=True)
 
