@@ -40,7 +40,7 @@ def register(request):
         user_info = get_user_info(request, school_id, jw_password, captcha)
         status = user_info[-1]
         if status[0] == 200:
-            #TODO:捕获异常
+            
             try:
                 user = User(username=school_id)
                 user.set_password(password)
@@ -52,7 +52,7 @@ def register(request):
                 return HttpResponse(json.dumps(response))
             return render(request, 'users/user_info.html', {'user_info': user_info})
         else:
-        #TODO: 错误状态的响应
+      
             response = {'status_code': status[0],
                         'error_info' : status[1]
                        }
@@ -97,13 +97,12 @@ def dashboard(request):
     return render(request, 'users/dashboard.html', {"userprofile": userprofile})
 
 
-#@login_required(login_url='student_index')
-#@is_student()
+@login_required(login_url='')
 def user_logout(request):
     logout(request)
     return redirect('user_index')
 
-#@login_required()
+@login_required()
 def user_profile(request, school_id):
     try:
         user = UserProfile.objects.get(school_id=school_id)
@@ -131,7 +130,7 @@ def user_profile(request, school_id):
     else:
         return render(request, 'users/user_profile.html',{'UserProfileForm': user})
 
-#@login_required()
+@login_required()
 def user_modify(request, school_id):
     try:
         user = UserProfile.objects.get(school_id=school_id)
@@ -161,7 +160,7 @@ def user_modify(request, school_id):
          return render(request, 'users/user_modify.html',{'userprofile': user})
 
 
-#@login_required()
+@login_required()
 def changepsw(request):
     if request.method == 'GET':
         print(request.user.username)

@@ -16,6 +16,7 @@ function checkpwd(obj){
 
 <form role="form" action="#" method="POST" id="change_password_form" onsubmit="return checkform(this);">
     {% csrf_token %} 
+ 
     <div class="form-group">
         <label for="password">旧密码</label>
         <input type="password" maxlength="30" id="password" placeholder="请输入旧密码" class="form-control" name="password"/>

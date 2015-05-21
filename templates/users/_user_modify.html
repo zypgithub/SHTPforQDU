@@ -1,33 +1,9 @@
 <form role="form" action="#" method="POST" id="modify_user_form">
     {% csrf_token %}
-    <div class="form-group">
-        <label for="school_id">学号</label>
-        <input type="text" maxlength="30" id="school_id" placeholder="school_id" class="form-control" name="school_id" value="{{ userprofile.school_id }}"/>
-    </div>
-    <div class="form-group">
-        <label for="username">姓名</label>
-        <input type="text" maxlength="30" id="username" placeholder="username" class="form-control" name="username" value="{{ userprofile.username }}"/>
-    </div>
+    
     <div class="form-group">
         <label for="nickname">昵称</label>
         <input type="text" maxlength="30" id="nickname" placeholder="nickname" class="form-control" name="nickname" required="required" value="{{ userprofile.nickname }}"/>
-    </div>
-    <div class="form-group">
-        <label for="college">学院</label>
-        <input type="text" maxlength="30" id="college" placeholder="college" class="form-control" name="college" required="required" value="{{ userprofile.college }}"/>
-    </div>
-    <div class="form-group">
-        <label for="grade">年级</label>
-        <input type="text" maxlength="30" id="grade" placeholder="grade" class="form-control" name="grade" required="required" value="{{ userprofile.grade }}"/>
-    </div>
-    <div class="form-group">
-        <label for="major">专业</label>
-        <input type="text" maxlength="30" id="major" placeholder="major" class="form-control" name="major" required="required" value="{{ userprofile.major }}"/>
-    </div>
-    <div class="form-group">
-        <label for="gender">性别</label>
-	<input type="text" maxlength="30" id="major" placeholder="major" class="form-control" name="gender" required="required" value="{{ userprofile.gender }}"/>
-        
     </div>
     <div class="form-group">
         <label for="telephone">电话</label>

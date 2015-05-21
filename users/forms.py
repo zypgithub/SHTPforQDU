@@ -13,6 +13,6 @@ class UserProfileForm(forms.ModelForm):
 
     class Meta:
         model = UserProfile
-        fields = ['school_id','username','nickname','college','grade', 'major', 'gender','telephone', 'qq','pswanwser', 'pswquestion'] 
+        fields = ['school_id','username','nickname','college','grade', 'major', 'gender','telephone', 'qq',] 
 
 
