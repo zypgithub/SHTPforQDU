@@ -103,6 +103,7 @@ def user_logout(request):
     return redirect('user_index')
 
 #TODO 验证申请者身份，必须查看自己的用户信息！POST完全没用，没有表单向这个函数提交POST信息
+#school_id 可以直接从requeset.user查数据找到userprofile从而获得。应尽量减少从用户那获取的信息
 @login_required(login_url="/users/")
 def user_profile(request, school_id):
     try:
