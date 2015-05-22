@@ -1,0 +1,48 @@
+#create_button
+{
+    float:right;
+    width:150px;
+    margin-top: -50px;
+}
+#search_form
+{
+}
+#create_button button
+{
+    width:150px;
+}
+#goods_photo
+{
+    width: 150px;
+}
+#goods_price
+{
+    width: 200px;
+}
+#goods_price a, #goods_publishtime a
+{
+    color:black;
+}
+#goods_publishtime
+{
+    width: 150px;
+}
+#goods_name
+{
+    width: auto;
+}
+.price
+{
+    color: red;
+    width:150px;
+}
+.title
+{
+    text-align: left;
+}
+.title a
+{
+    color:black;
+}
+.title a:link {color: black; text-decoration:none;} 
+.title a:hover {color: #f40} 

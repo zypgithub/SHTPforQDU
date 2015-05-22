@@ -1,0 +1,9 @@
+{% extends "goods/dashboard.html" %}
+
+{% block cssblockforchild_two_colums %}
+<link rel="stylesheet" href="{{ STATIC_URL }}css/goodsdetails.css">
+{% endblock%}
+
+{% block right %}
+    {% include "goods/_goods_details.html"%}
+{% endblock %}

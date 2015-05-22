@@ -1,9 +1,11 @@
-<form class="form-horizontal" role="form" action="" method="get">
+<form class="form-horizontal" role="form" action="" method="get" id="search_form">
     <div class="form-group">
         <label for="search_bar" class="col-sm-1 control-label">搜索:</label>
         <div class="col-sm-3">
-            <input type="text" class="form-control" name="search" id="search_bar" placeholder="笔记本">
-                </div>
+            <input type="hidden" name="order" value="{{ order }}"> 
+            <input type="text" length="40" class="form-control" name="search" id="search_bar" placeholder="例如：笔记本" value="{{ search_keyword }}">
+        </div>
             <button type="submit" class="btn btn-default">搜索</button>
     </div>
 </form>
+<a id="create_button" href="{% url 'create_goods' %}"><button class="btn btn-info" >发布信息</button></a>

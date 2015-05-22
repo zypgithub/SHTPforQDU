@@ -1,0 +1,9 @@
+#filesform input
+{
+    display: inline-block;
+}
+#filesform label
+{
+    width: 70px;
+    display:inline-block;
+}

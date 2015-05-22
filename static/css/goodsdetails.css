@@ -1,0 +1,123 @@
+#LookThroughTimes
+{
+    float: left;
+    clear: left;
+    margin-left: 20px;
+}
+.label
+{
+    color:rgb(153, 153, 153);
+    text-align:left;
+    width:150px;
+    display: inline-block;
+}
+#seller
+{
+    background-color: rgb(217, 237, 247);
+    vertical-align:middle;
+    width:500px;
+    font-weight:600;
+    font-size: 200%;
+    margin:0px 0 10px 0px;
+}
+#goods_album
+{
+    width:200px;
+    height:230px;
+    float:left;
+}
+#goods_info
+{
+    height:200px;
+    width:500px;
+    float:left;
+    padding: 0 0 0 30px;
+}
+#goods_description
+{
+    clear:left;
+}
+.clean_button
+{
+    padding: 0px;
+    border: 0px;
+}
+#goods_title
+{
+    text-align: left;
+    border:0px;
+    padding:0px;
+    margin:0px 0 10px 0px;
+    font-weight: 700;
+    font-size:150%;
+    width:500px;
+}
+#goods_price
+{
+    background-color:rgb(242, 222, 222);
+    vertical-align:middle;
+    width:500px;
+    font-weight:600;
+    font-size: 200%;
+    margin:0px 0 10px 0px;
+}
+#contact
+{
+    background-color:rgb(252, 248, 227);
+    vertical-align:middle;
+    width:500px;
+    font-weight:600;
+    font-size: 200%;
+    margin:0px 0 10px 0px;
+}
+#price_number
+{
+    color:red;
+    font-size: 120%;
+    text-align:center;
+}
+#seller_name
+{
+    text-align:center;
+}
+#goods_description
+{
+    border-style:solid;
+    border-color:rgb(226, 226, 226);
+    margin:10px 0 10px 0px;
+    float:left;
+    width:750px;
+    min-height:500px;
+}
+pre
+{
+    font-size:200%;
+}
+
+#operations
+{
+    margin-bottom: 20px;
+    text-align: center;
+}
+#operations>a
+{
+    margin:0 20px 0 20px;
+    width: 150px;
+}
+#delete_confirm 
+{
+    
+    margin: 20px 40px 20px 50px;
+}
+#delete_alert
+{
+    text-align: left;
+}
+#delete_alert>p
+{
+    font-size:180%;
+    margin:50px;
+    padding:20px 10px 20px 10px;
+    background-color: #d44950;
+
+}

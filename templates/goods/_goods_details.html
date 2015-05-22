@@ -1,0 +1,82 @@
+{% if is_myself %}
+<div id="operations">
+    <a href="{% url 'modify_goods' goods.id %}"><button type="submit" class="btn btn-success">修改信息</button></a>
+    <button type="button" class="btn btn-info" data-toggle="modal" data-target=".bs-example-modal-sm">删除该条信息</button></a>
+    <div class="modal fade bs-example-modal-sm" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-sm">
+            <div class="modal-content" id="delete_alert" >
+                <p class="bg-danger">删除后的信息将无法回复，请谨慎选择</p>
+                <a href="{% url 'delete_goods' goods.id %}"><button type="button" id="delete_confirm" class="btn btn-danger">确认删除</button></a>
+                <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+            </div>
+        </div>
+    </div>
+</div>
+{% endif %}
+<div id="goods_album">
+    <div id="carousel-example-generic" class="carousel slide" data-ride="carousel">
+        <!-- Indicators -->
+        <ol class="carousel-indicators">
+            {% if photos %}
+            <li  data-slide-to="0" class="active"></li>
+            {% endif %}
+            {% for item in photos %}
+            <li  data-slide-to="{{ forloop.counter  }}"></li>
+            {% endfor %}
+        </ol>
+        <!-- Wrapper for slides -->
+        <div class="carousel-inner" role="listbox">
+            <div class="item active">
+                <button type="button" class="clean_button" data-toggle="modal" data-target=".bs-example-modal-lg"><img src="../{{ goods.goods_cover }}" height="200px" width="200px"></button>
+                <div class="modal fade bs-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+                    <div class="modal-dialog modal-lg">
+                        <div class="modal-content">
+                            <img src="../{{ goods.goods_cover }}" width="800px">
+                        </div>
+                    </div>
+                </div>
+            </div>
+           {% for item in photos%}
+            <div class="item">
+                <button type="button" class="clean_button" data-toggle="modal" data-target=".modal-{{ forloop.counter }}"><img src="{{ item.photo }}" height="200px" width="200px"></button>
+                <div class="modal fade modal-{{ forloop.counter }}" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+                    <div class="modal-dialog modal-lg">
+                        <div class="modal-content">
+                            <img src="{{ item.photo }}" width="800px">
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% endfor%}
+        </div>
+
+        {% if photos %}
+        <!-- Controls -->
+        <a class="left carousel-control" href="#carousel-example-generic" role="button" data-slide="prev">
+            <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
+            <span class="sr-only">Previous</span>
+        </a>
+        <a class="right carousel-control" href="#carousel-example-generic" role="button" data-slide="next">
+            <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
+            <span class="sr-only">Next</span>
+        </a>
+        {% endif %}
+    </div>
+</div>
+<div id="goods_info">
+    <div id="goods_title">{{ goods.title }}</div>
+    <div id = "goods_price"><span class="label">价格:</span><span id="price_number">¥ {{ goods.price }}</span></div>
+    {% if user.is_authenticated %}
+    <div id="seller"><span class="label">卖家:</span><span id="seller_name">{{ goods.author }}</span></div>
+        <div id="contact"><span class="label">联系方式:</span><span id="contact_content">{{ goods.contact }}</span></div>
+    {% else %}
+    <div id="nologin">您还未登陆，无法查看卖家及其联系方式。&nbsp<a href="{% url 'user_index' %}?next={% url 'goods_details' goods.id %}">点击此处登陆</a></div>
+    {% endif %}
+</div>
+<div id="LookThroughTimes">
+    <label>查看次数: </label> <span> {{ goods.browse_count }} </span>
+</div>
+<div id="goods_description">
+    <pre>{{ goods.description }}</pre>
+</div>
+

@@ -36,7 +36,6 @@ def register(request):
         password = request.POST.get("password")
         pswquestion = request.POST.get("pswquestion")
         pswanwser = request.POST.get("pswanwser")
-        print school_id + jw_password + " " + captcha + password
         user_info = get_user_info(request, school_id, jw_password, captcha)
         status = user_info[-1]
         if status[0] == 200:

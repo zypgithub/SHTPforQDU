@@ -3,10 +3,12 @@
 
 {% block cssblock %}
 <link rel='stylesheet' href='{{ STATIC_URL  }}css/two_columns.css'/>
+{% block cssblockforchild_two_colums %}
+{% endblock %}
 {% endblock %}
 
-{% block body %}
 
+{% block body %}
 {% block nav_bar %}
 {% endblock %}
 

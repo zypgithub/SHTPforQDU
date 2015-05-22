@@ -394,6 +394,8 @@ if (!jQuery) { throw new Error("Bootstrap requires jQuery") }
 
     if (this.$indicators.length) {
       this.$indicators.find('.active').removeClass('active')
+
+
       this.$element.one('slid', function () {
         var $nextIndicator = $(that.$indicators.children()[that.getActiveIndex()])
         $nextIndicator && $nextIndicator.addClass('active')
@@ -410,6 +412,7 @@ if (!jQuery) { throw new Error("Bootstrap requires jQuery") }
       $active
         .one($.support.transition.end, function () {
           $next.removeClass([type, direction].join(' ')).addClass('active')
+
           $active.removeClass(['active', direction].join(' '))
           that.sliding = false
           setTimeout(function () { that.$element.trigger('slid') }, 0)
@@ -425,7 +428,6 @@ if (!jQuery) { throw new Error("Bootstrap requires jQuery") }
     }
 
     isCycling && this.cycle()
-
     return this
   }
 
@@ -470,7 +472,6 @@ if (!jQuery) { throw new Error("Bootstrap requires jQuery") }
     var options = $.extend({}, $target.data(), $this.data())
     var slideIndex = $this.attr('data-slide-to')
     if (slideIndex) options.interval = false
-
     $target.carousel(options)
 
     if (slideIndex = $this.attr('data-slide-to')) {
@@ -714,6 +715,7 @@ if (!jQuery) { throw new Error("Bootstrap requires jQuery") }
       if ('ontouchstart' in document.documentElement && !$parent.closest('.navbar-nav').length) {
         // if mobile we we use a backdrop because click events don't delegate
         $('<div class="dropdown-backdrop"/>').insertAfter($(this)).on('click', clearMenus)
+
       }
 
       $parent.trigger(e = $.Event('show.bs.dropdown'))
@@ -866,11 +868,15 @@ if (!jQuery) { throw new Error("Bootstrap requires jQuery") }
 
   Modal.prototype.toggle = function (_relatedTarget) {
     return this[!this.isShown ? 'show' : 'hide'](_relatedTarget)
+
   }
 
   Modal.prototype.show = function (_relatedTarget) {
     var that = this
+
     var e    = $.Event('show.bs.modal', { relatedTarget: _relatedTarget })
+
+
 
     this.$element.trigger(e)
 
@@ -881,6 +887,7 @@ if (!jQuery) { throw new Error("Bootstrap requires jQuery") }
     this.escape()
 
     this.$element.on('click.dismiss.modal', '[data-dismiss="modal"]', $.proxy(this.hide, this))
+
 
     this.backdrop(function () {
       var transition = $.support.transition && that.$element.hasClass('fade')
@@ -991,6 +998,7 @@ if (!jQuery) { throw new Error("Bootstrap requires jQuery") }
           : this.hide.call(this)
       }, this))
 
+
       if (doAnimate) this.$backdrop[0].offsetWidth // force reflow
 
       this.$backdrop.addClass('in')
@@ -1055,7 +1063,7 @@ if (!jQuery) { throw new Error("Bootstrap requires jQuery") }
     var href    = $this.attr('href')
     var $target = $($this.attr('data-target') || (href && href.replace(/.*(?=#[^\s]+$)/, ''))) //strip for ie7
     var option  = $target.data('modal') ? 'toggle' : $.extend({ remote: !/#/.test(href) && href }, $target.data(), $this.data())
-
+console.log($target)
     e.preventDefault()
 
     $target
@@ -1996,4 +2004,4 @@ if (!jQuery) { throw new Error("Bootstrap requires jQuery") }
     })
   })
 
-}(window.jQuery);
+}(window.jQuery);this.$backdropthis.$backdrop
