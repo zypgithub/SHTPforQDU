@@ -102,6 +102,7 @@ def user_logout(request):
     logout(request)
     return redirect('user_index')
 
+#TODO 验证申请者身份，必须查看自己的用户信息！POST完全没用，没有表单向这个函数提交POST信息
 @login_required(login_url="/users/")
 def user_profile(request, school_id):
     try:
@@ -179,7 +180,6 @@ def changepsw(request):
         user.save()
     return HttpResponseRedirect('/users/profile/(?P<school_id>\d+)/') 
 
-#TODO this 
 def retrievepsw(request):
     if request.method == 'GET':
         print(request.user.username)
