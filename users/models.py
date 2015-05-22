@@ -4,7 +4,7 @@ from django.db import models
 
 class UserProfile(models.Model):
     user = models.OneToOneField(User, unique=True)
-    school_id = models.CharField(max_length=12, null=False, blank=False)
+    school_id = models.CharField(max_length=12, null=False, blank=False, unique=True)
     username = models.CharField(max_length=30, null=False, blank=False)
     nickname = models.CharField(max_length=30, null=False, blank=False)
     college = models.CharField(max_length=30, null=False, blank=False)
