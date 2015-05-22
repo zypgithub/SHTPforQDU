@@ -1,0 +1,36 @@
+<form role="form" action="#" method="POST" id="profile_user_form">
+    {% csrf_token %}
+<div class="panel panel-info">
+<div class="panel-heading">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;基本信息</div>
+  <div class="panel-body">
+    <div class="form-group">
+        <label for="school_id">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;学号&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label><tr class="active">{{ UserProfileForm.school_id }}</tr>
+    </div>
+    <div class="form-group">
+        <label for="username">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;姓名&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</lable><tr class="active">{{ UserProfileForm.username }}</tr>
+    </div>
+    <div class="form-group">
+        <label for="nickname">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;昵称&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label> <tr class="active">{{ UserProfileForm.nickname }}</tr>
+    </div>
+    <div class="form-group">
+        <label for="college">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;学院&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label><tr class="active">{{ UserProfileForm.college }}</tr>
+    </div>
+    <div class="form-group">
+        <label for="grade">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;年级&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label><tr class="active">{{ UserProfileForm.grade }}</tr>
+    </div>
+    <div class="form-group">
+        <label for="major">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;专业&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label><tr class="active">{{ UserProfileForm.major }}</tr>
+    </div>
+    <div class="form-group">
+        <label for="gender">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;性别&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label><tr class="active">{{ UserProfileForm.gender }}</tr>
+    </div>
+    <div class="form-group">
+        <label for="telephone">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;电话&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label><tr class="active">{{ UserProfileForm.telephone}}</tr>
+    </div>
+    <div class="form-group">
+        <label for="qq">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Q  Q&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label><tr class="active"> {{ UserProfileForm.qq }}</tr>
+    </div>
+  </div>
+</div>
+</form>
+
