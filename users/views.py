@@ -8,6 +8,7 @@ from django import forms
 from django.core.exceptions import ValidationError
 
 from django.contrib.auth import authenticate, login, logout
+from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 from django.db import IntegrityError
 from django.http import HttpResponse, HttpResponseRedirect, Http404
@@ -96,12 +97,12 @@ def dashboard(request):
     return render(request, 'users/dashboard.html', {"userprofile": userprofile})
 
 
-@login_required(login_url='')
+@login_required(login_url="/users/")
 def user_logout(request):
     logout(request)
     return redirect('user_index')
 
-@login_required()
+@login_required(login_url="/users/")
 def user_profile(request, school_id):
     try:
         user = UserProfile.objects.get(school_id=school_id)
@@ -129,7 +130,6 @@ def user_profile(request, school_id):
     else:
         return render(request, 'users/user_profile.html',{'UserProfileForm': user})
 
-@login_required()
 def user_modify(request, school_id):
     try:
         user = UserProfile.objects.get(school_id=school_id)
@@ -159,7 +159,7 @@ def user_modify(request, school_id):
          return render(request, 'users/user_modify.html',{'userprofile': user})
 
 
-@login_required()
+@login_required(login_url="/users/")
 def changepsw(request):
     if request.method == 'GET':
         print(request.user.username)
@@ -179,20 +179,49 @@ def changepsw(request):
         user.save()
     return HttpResponseRedirect('/users/profile/(?P<school_id>\d+)/') 
 
+#TODO this 
 def retrievepsw(request):
     if request.method == 'GET':
         print(request.user.username)
-        return render(request, 'users/retrievepsw.html', {'username': request.user.username})     
+        if 'school_id' in request.GET:
+            school_id = request.GET['school_id']
+            try:
+                userprofile = UserProfile.objects.get(school_id = school_id)
+            except UserProfile.DoesNotExist:
+                response = {"status": "fail", "reason": "user does not exist"}
+                return HttpResponse(simplejson.dumps(response)) 
+            return render(request, 'users/retrievepsw_second.html', {'userprofile': userprofile})
+        else:
+            return render(request, 'users/retrievepsw.html')     
     if request.method == 'POST':
-        username = request.POST.get('username')
-        user = UserProfile.objects.get(username = username)
-        form = UserProfileForm(request.POST, instance = user)
-        if form.is_valid():
-            user.pswquestion = form.cleaned_data['pswquestion']
-            user.pswanwser = form.cleaned_data['pswanwser']
-            psw = user.get_password()
-            return HttpResponse("your psw is :"+psw, content_type="text/html")
-    response = {"status": "fail"}
+        if 'school_id' in request.POST:
+            school_id = request.POST['school_id']
+            try:
+                userprofile = UserProfile.objects.get(school_id = school_id)
+            except UserProfile.DoesNotExist:
+                response = {"status": "fail", "reason": "user does not exist"}
+                return HttpResponse(simplejson.dumps(response)) 
+            if 'pswanwser' in request.POST:
+                if request.POST['pswanwser'] == userprofile.pswanwser:
+                    if 'new_psw' in request.POST:
+                        user = userprofile.user
+                        user.set_password(request.POST['new_psw'])
+                        user.save()
+                        response = {"status": "success"}
+                        return HttpResponse(simplejson.dumps(response)) 
+                    else:
+                        response = {"status": "fail", "reason": "new password is required"}
+                        return HttpResponse(simplejson.dumps(response)) 
+                else:
+                    response = {"status": "fail", "reason": "password anwser is incorrect"}
+                    return HttpResponse(simplejson.dumps(response)) 
+            else:
+                response = {"status": "fail", "reason": "password anwser is required"}
+                return HttpResponse(simplejson.dumps(response)) 
+        else:
+            response = {"status": "fail", "reason": "school id is required"}
+            return HttpResponse(simplejson.dumps(response)) 
+    response = {"status": "fail", "reason": "unknow"}
     return HttpResponse(simplejson.dumps(response)) 
     
 
