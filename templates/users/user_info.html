@@ -6,7 +6,7 @@
 
 {% block body %}
 <div>
-    <form id="user_info" action={% url 'user_profile' %} method="post">
+    <form id="user_info" action={% url 'user_profile' user_info.0 %} method="post">
         {% csrf_token %}
         <label for="school_id">学号</label>
         <input name="school_id" id="school_id" value="{{ user_info.0 }}" readonly="readonly"><br />

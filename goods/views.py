@@ -19,12 +19,14 @@ from goods.form import GoodsForm,PhotoForm
 from users.models import UserProfile
 
 from django.db.models import Q
-#todo: 关键词搜索
+
 def list_goods(request, filter_category):
     categories = category.objects.values('name', 'production_count', 'id')
     try:
         userprofile = UserProfile.objects.get(user=request.user)
     except UserProfile.DoesNotExist:
+        userprofile = None
+    except TypeError:
         userprofile = None
     if 'search' in request.GET:
         search_keyword = request.GET['search']
@@ -95,8 +97,7 @@ def create_goods(request):
                 photos.append(PhotoForm(request.POST, request.FILES, prefix=i))
                 if photos[i - 1].is_valid():
                     photos[i - 1].save(g)
-            myjson={"status": "success"}
-            return HttpResponse(simplejson.dumps(myjson))
+            return render(request, 'goods/success.html', {'userprofile': userprofile, 'categories': categories, })
         else:
             myjson={"status": "fail"}
             return HttpResponse(simplejson.dumps(myjson))
@@ -124,8 +125,11 @@ def goods_details(request, goods_id):
         is_myself = True
     else:
         is_myself = False
-    
-    return render(request, 'goods/goods_details.html', {"goods": selected_goods, "photos": selected_photos, "categories": categories, "userprofile": userprofile, "is_myself": is_myself})
+    try:
+        author = UserProfile.objects.get(school_id=request.user.username)
+    except UserProfile.DoesNotExist:
+        author = None
+    return render(request, 'goods/goods_details.html', {"goods": selected_goods, "photos": selected_photos, "categories": categories, "userprofile": userprofile, "is_myself": is_myself, 'author': author})
 
 @login_required(login_url="/users/")
 def delete_goods(request, goods_id):

@@ -57,7 +57,7 @@ def register(request):
                         'error_info' : status[1]
                        }
             return HttpResponse(json.dumps(response))
-        return HttpResponse(status[1], content_type="text/html;charset=utf-8")
+        return HttpResponse(status[1], "text/html;charset=utf-8")
 
 def save_user(request):
     if request.method == "POST":
@@ -102,9 +102,10 @@ def user_logout(request):
     logout(request)
     return redirect('user_index')
 
-#TODO 验证申请者身份，必须查看自己的用户信息！POST完全没用，没有表单向这个函数提交POST信息
+#TODO 验证申请者身份，必须查看自己的用户信息！
 #school_id 可以直接从requeset.user查数据找到userprofile从而获得。应尽量减少从用户那获取的信息
-@login_required(login_url="/users/")
+#
+#@login_required(login_url="/users/")
 def user_profile(request, school_id):
     try:
         user = UserProfile.objects.get(school_id=school_id)
@@ -122,7 +123,7 @@ def user_profile(request, school_id):
 	    user.gender = form.cleaned_data['gender']
 	    user.telephone = form.cleaned_data['telephone']
             user.qq = form.cleaned_data['qq']
-            response = {"status": "ok"}
+            response = {"status": "注册成功"}
             return HttpResponseRedirect('/users/profile/(?P<school_id>\d+)/')
             return HttpResponse(simplejson.dumps(response))
         else:
@@ -130,7 +131,7 @@ def user_profile(request, school_id):
             response = {"status": "fail"}
             return HttpResponse(simplejson.dumps(response))
     else:
-        return render(request, 'users/user_profile.html',{'UserProfileForm': user})
+        return render(request, 'users/user_profile.html',{'userprofile': user})
 
 def user_modify(request, school_id):
     try:
@@ -163,9 +164,13 @@ def user_modify(request, school_id):
 
 @login_required(login_url="/users/")
 def changepsw(request):
+    try:
+        userprofile = UserProfile.objects.get(user = request.user )
+    except UserProfile.DoesNotExist:
+    	raise Http404
     if request.method == 'GET':
         print(request.user.username)
-        return render(request, 'users/changepsw.html', {'username': request.user.username})           
+        return render(request, 'users/changepsw.html', {'username': request.user.username, 'userprofile': userprofile})           
     if request.method == 'POST':
         new_psw = request.POST.get('new_psw') 
         new_psw2 = request.POST.get('new_psw2')
@@ -179,7 +184,7 @@ def changepsw(request):
         user.set_password(new_psw)
         print(new_psw)
         user.save()
-    return HttpResponseRedirect('/users/profile/(?P<school_id>\d+)/') 
+        return render(request, 'users/success.html', {'userprofile': userprofile})           
 
 def retrievepsw(request):
     if request.method == 'GET':
@@ -208,23 +213,17 @@ def retrievepsw(request):
                         user = userprofile.user
                         user.set_password(request.POST['new_psw'])
                         user.save()
-                        response = {"status": "success"}
-                        return HttpResponse(simplejson.dumps(response)) 
+                        return render(request, 'users/success.html', {'userprofile': userprofile})           
                     else:
-                        response = {"status": "fail", "reason": "new password is required"}
-                        return HttpResponse(simplejson.dumps(response)) 
+                        return render(request, 'users/failed.html', {'userprofile': userprofile, 'fail_reason': "请填写新密码"})           
                 else:
-                    response = {"status": "fail", "reason": "password anwser is incorrect"}
-                    return HttpResponse(simplejson.dumps(response)) 
+                    return render(request, 'users/failed.html', {'userprofile': userprofile, 'fail_reason': "密码找回答案错误"})           
             else:
-                response = {"status": "fail", "reason": "password anwser is required"}
-                return HttpResponse(simplejson.dumps(response)) 
+                return render(request, 'users/failed.html', {'userprofile': userprofile, 'fail_reason': "请填写密码找回答案"})           
         else:
-            response = {"status": "fail", "reason": "school id is required"}
-            return HttpResponse(simplejson.dumps(response)) 
-    response = {"status": "fail", "reason": "unknow"}
-    return HttpResponse(simplejson.dumps(response)) 
+            return render(request, 'users/failed.html', {'userprofile': userprofile, 'fail_reason': "学号有误"})           
     
+        return render(request, 'users/failed.html', {'userprofile': userprofile, 'fail_reason': "未知"})           
 
 def index(request):
     if 'next' in request.GET:

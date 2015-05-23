@@ -67,7 +67,7 @@
     <div id="goods_title">{{ goods.title }}</div>
     <div id = "goods_price"><span class="label">价格:</span><span id="price_number">¥ {{ goods.price }}</span></div>
     {% if user.is_authenticated %}
-    <div id="seller"><span class="label">卖家:</span><span id="seller_name">{{ goods.author }}</span></div>
+    <div id="seller"><span class="label">卖家:</span><span id="seller_name">{{ author.nickname }}</span></div>
         <div id="contact"><span class="label">联系方式:</span><span id="contact_content">{{ goods.contact }}</span></div>
     {% else %}
     <div id="nologin">您还未登陆，无法查看卖家及其联系方式。&nbsp<a href="{% url 'user_index' %}?next={% url 'goods_details' goods.id %}">点击此处登陆</a></div>
